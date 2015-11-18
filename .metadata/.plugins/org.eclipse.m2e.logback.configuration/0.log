@@ -1,0 +1,3 @@
+2015-11-17 15:22:18,593 [Thread-9] ERROR org.eclipse.jgit.util.FS - error: cannot spawn echo: No such file or directory
+error: unable to start editor 'echo'
+

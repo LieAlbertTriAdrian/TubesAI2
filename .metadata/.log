@@ -1,0 +1,180 @@
+!SESSION 2015-11-17 15:21:11.899 -----------------------------------------------
+eclipse.buildId=4.6.0.I20151029-1100
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.oomph.setup.core 2 0 2015-11-17 15:21:25.561
+!MESSAGE Proxy Authentication Required
+!STACK 0
+org.eclipse.oomph.util.IOExceptionWithCause: Proxy Authentication Required
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:288)
+	at org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl.createInputStream(ExtensibleURIConverterImpl.java:360)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.handleArchiveRedirection(SetupCoreUtil.java:376)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.configureResourceSet(SetupCoreUtil.java:358)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.createResourceSet(SetupCoreUtil.java:131)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.performStartup(SetupUIPlugin.java:382)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.access$3(SetupUIPlugin.java:323)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin$1$1.run(SetupUIPlugin.java:223)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.eclipse.ecf.filetransfer.IncomingFileTransferException: Proxy Authentication Required
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientRetrieveFileTransfer.openStreams(HttpClientRetrieveFileTransfer.java:658)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.AbstractRetrieveFileTransfer.sendRetrieveRequest(AbstractRetrieveFileTransfer.java:885)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.AbstractRetrieveFileTransfer.sendRetrieveRequest(AbstractRetrieveFileTransfer.java:576)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.MultiProtocolRetrieveAdapter.sendRetrieveRequest(MultiProtocolRetrieveAdapter.java:106)
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:225)
+	... 8 more
+
+!ENTRY org.eclipse.oomph.setup.core 2 0 2015-11-17 15:21:25.722
+!MESSAGE Proxy Authentication Required
+!STACK 0
+org.eclipse.oomph.util.IOExceptionWithCause: Proxy Authentication Required
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:288)
+	at org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl.createInputStream(ExtensibleURIConverterImpl.java:360)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.handleArchiveRedirection(SetupCoreUtil.java:376)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.configureResourceSet(SetupCoreUtil.java:358)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.createResourceSet(SetupCoreUtil.java:131)
+	at org.eclipse.oomph.setup.internal.core.util.UserURIHandlerImpl.create(UserURIHandlerImpl.java:195)
+	at org.eclipse.oomph.setup.internal.core.util.UserURIHandlerImpl.exists(UserURIHandlerImpl.java:106)
+	at org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl.exists(ExtensibleURIConverterImpl.java:378)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin$2.run(SetupUIPlugin.java:278)
+	at org.eclipse.oomph.util.WorkerPool.begin(WorkerPool.java:119)
+	at org.eclipse.oomph.setup.internal.core.util.ResourceMirror.begin(ResourceMirror.java:111)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.mirror(SetupUIPlugin.java:287)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.performStartup(SetupUIPlugin.java:390)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.access$3(SetupUIPlugin.java:323)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin$1$1.run(SetupUIPlugin.java:223)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.eclipse.ecf.filetransfer.IncomingFileTransferException: Proxy Authentication Required
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientRetrieveFileTransfer.openStreams(HttpClientRetrieveFileTransfer.java:658)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.AbstractRetrieveFileTransfer.sendRetrieveRequest(AbstractRetrieveFileTransfer.java:885)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.AbstractRetrieveFileTransfer.sendRetrieveRequest(AbstractRetrieveFileTransfer.java:576)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.MultiProtocolRetrieveAdapter.sendRetrieveRequest(MultiProtocolRetrieveAdapter.java:106)
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:225)
+	... 15 more
+
+!ENTRY org.eclipse.oomph.base 2 0 2015-11-17 15:21:26.216
+!MESSAGE org.eclipse.oomph.util.IOExceptionWithCause: Proxy Authentication Required
+!STACK 0
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.eclipse.oomph.util.IOExceptionWithCause: Proxy Authentication Required
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.handleDemandLoadException(ResourceSetImpl.java:319)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:278)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$ResourceLocator.demandLoadHelper(ResourceSetImpl.java:804)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$MappedResourceLocator.getResource(ResourceSetImpl.java:1204)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil$1.getResource(SetupCoreUtil.java:299)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:352)
+	at org.eclipse.oomph.base.util.BaseUtil.loadResourceSafely(BaseUtil.java:54)
+	at org.eclipse.oomph.setup.internal.core.SetupContext.getInstallation(SetupContext.java:615)
+	at org.eclipse.oomph.setup.internal.core.SetupContext.create(SetupContext.java:250)
+	at org.eclipse.oomph.setup.internal.core.SetupTaskPerformer.createForIDE(SetupTaskPerformer.java:3479)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.performStartup(SetupUIPlugin.java:416)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.access$3(SetupUIPlugin.java:323)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin$1$1.run(SetupUIPlugin.java:223)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.eclipse.oomph.util.IOExceptionWithCause: Proxy Authentication Required
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:288)
+	at org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl.createInputStream(ExtensibleURIConverterImpl.java:360)
+	at org.eclipse.emf.ecore.resource.impl.ResourceImpl.load(ResourceImpl.java:1269)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoad(ResourceSetImpl.java:259)
+	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:274)
+	... 12 more
+Caused by: org.eclipse.ecf.filetransfer.IncomingFileTransferException: Proxy Authentication Required
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientRetrieveFileTransfer.openStreams(HttpClientRetrieveFileTransfer.java:658)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.AbstractRetrieveFileTransfer.sendRetrieveRequest(AbstractRetrieveFileTransfer.java:885)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.AbstractRetrieveFileTransfer.sendRetrieveRequest(AbstractRetrieveFileTransfer.java:576)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.MultiProtocolRetrieveAdapter.sendRetrieveRequest(MultiProtocolRetrieveAdapter.java:106)
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:225)
+	... 16 more
+
+!ENTRY org.eclipse.oomph.setup.core 2 0 2015-11-17 15:21:26.507
+!MESSAGE Proxy Authentication Required
+!STACK 0
+org.eclipse.oomph.util.IOExceptionWithCause: Proxy Authentication Required
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:288)
+	at org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl.createInputStream(ExtensibleURIConverterImpl.java:360)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.handleArchiveRedirection(SetupCoreUtil.java:376)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.configureResourceSet(SetupCoreUtil.java:358)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.createResourceSet(SetupCoreUtil.java:131)
+	at org.eclipse.oomph.setup.internal.core.SetupContext.associate(SetupContext.java:356)
+	at org.eclipse.oomph.setup.internal.core.SetupContext.createSelf(SetupContext.java:237)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.performStartup(SetupUIPlugin.java:429)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.access$3(SetupUIPlugin.java:323)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin$1$1.run(SetupUIPlugin.java:223)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.eclipse.ecf.filetransfer.IncomingFileTransferException: Proxy Authentication Required
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientRetrieveFileTransfer.openStreams(HttpClientRetrieveFileTransfer.java:658)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.AbstractRetrieveFileTransfer.sendRetrieveRequest(AbstractRetrieveFileTransfer.java:885)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.AbstractRetrieveFileTransfer.sendRetrieveRequest(AbstractRetrieveFileTransfer.java:576)
+	at org.eclipse.ecf.provider.filetransfer.retrieve.MultiProtocolRetrieveAdapter.sendRetrieveRequest(MultiProtocolRetrieveAdapter.java:106)
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:225)
+	... 10 more
+
+!ENTRY org.eclipse.epp.logging.aeri.ui 2 5 2015-11-17 15:21:27.523
+!MESSAGE The configuration download failed. Version: 1.0.1.v20150913-0716
+!STACK 0
+org.apache.http.ConnectionClosedException: Premature end of Content-Length delimited message body (expected: 1866; received: 0
+	at org.apache.http.impl.io.ContentLengthInputStream.read(ContentLengthInputStream.java:180)
+	at org.apache.http.impl.io.ContentLengthInputStream.read(ContentLengthInputStream.java:200)
+	at org.apache.http.impl.io.ContentLengthInputStream.close(ContentLengthInputStream.java:103)
+	at org.apache.http.util.EntityUtils.toByteArray(EntityUtils.java:141)
+	at org.apache.http.entity.BufferedHttpEntity.<init>(BufferedHttpEntity.java:63)
+	at org.apache.http.impl.execchain.MainClientExec.createTunnelToTarget(MainClientExec.java:490)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:380)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:219)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:86)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:108)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:57)
+	at org.apache.http.client.fluent.Executor.execute(Executor.java:206)
+	at org.eclipse.epp.internal.logging.aeri.ui.v2.AeriServer.request(AeriServer.java:57)
+	at org.eclipse.epp.internal.logging.aeri.ui.v2.AeriServer.refreshConfiguration(AeriServer.java:73)
+	at org.eclipse.epp.internal.logging.aeri.ide.Startup.initializeServerAndConfiguration(Startup.java:211)
+	at org.eclipse.epp.internal.logging.aeri.ide.Startup.access$4(Startup.java:201)
+	at org.eclipse.epp.internal.logging.aeri.ide.Startup$1.run(Startup.java:98)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.epp.logging.aeri.ui 2 29 2015-11-17 15:21:27.527
+!MESSAGE Startup failed, AERI is disabled until next restart. Version: 1.0.1.v20150913-0716
+!STACK 0
+java.lang.RuntimeException: org.apache.http.ConnectionClosedException: Premature end of Content-Length delimited message body (expected: 1866; received: 0
+	at com.google.common.base.Throwables.propagate(Throwables.java:160)
+	at org.eclipse.epp.internal.logging.aeri.ide.Startup.initializeServerAndConfiguration(Startup.java:219)
+	at org.eclipse.epp.internal.logging.aeri.ide.Startup.access$4(Startup.java:201)
+	at org.eclipse.epp.internal.logging.aeri.ide.Startup$1.run(Startup.java:98)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Caused by: org.apache.http.ConnectionClosedException: Premature end of Content-Length delimited message body (expected: 1866; received: 0
+	at org.apache.http.impl.io.ContentLengthInputStream.read(ContentLengthInputStream.java:180)
+	at org.apache.http.impl.io.ContentLengthInputStream.read(ContentLengthInputStream.java:200)
+	at org.apache.http.impl.io.ContentLengthInputStream.close(ContentLengthInputStream.java:103)
+	at org.apache.http.util.EntityUtils.toByteArray(EntityUtils.java:141)
+	at org.apache.http.entity.BufferedHttpEntity.<init>(BufferedHttpEntity.java:63)
+	at org.apache.http.impl.execchain.MainClientExec.createTunnelToTarget(MainClientExec.java:490)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:380)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:219)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:86)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:108)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:57)
+	at org.apache.http.client.fluent.Executor.execute(Executor.java:206)
+	at org.eclipse.epp.internal.logging.aeri.ui.v2.AeriServer.request(AeriServer.java:57)
+	at org.eclipse.epp.internal.logging.aeri.ui.v2.AeriServer.refreshConfiguration(AeriServer.java:73)
+	at org.eclipse.epp.internal.logging.aeri.ide.Startup.initializeServerAndConfiguration(Startup.java:211)
+	... 3 more
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-11-17 15:22:02.670
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Wilhelm'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2015-11-17 15:22:18.596
+!MESSAGE error: cannot spawn echo: No such file or directory
+error: unable to start editor 'echo'
+
