@@ -38,8 +38,14 @@ public class Main {
 		
 		//Analysis Naive Bayes
 		NaiveBayes nb = new NaiveBayes(listCar);
-		nb.process();
 		
+		//Instance yang mmau dites
+		Car testInstance = listCar.get(0);
+		String result = nb.process(testInstance);
+		System.out.println(result);
+		
+
+		System.out.println(testInstance.getKelas());
 		//Analisis KNN
 		
 		
