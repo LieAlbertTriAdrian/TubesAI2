@@ -2,7 +2,7 @@ package org.tusiri.ai2;
 
 public class distance {
 	int ID;
-	double jarak;
+	static double jarak;
 	String label;
 	
 	public distance(){
