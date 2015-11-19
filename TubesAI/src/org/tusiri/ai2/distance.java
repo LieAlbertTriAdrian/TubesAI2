@@ -2,14 +2,14 @@ package org.tusiri.ai2;
 
 public class distance {
 	int ID;
-	int jarak;
+	static double jarak;
 	String label;
 	
 	public distance(){
 		
 	}
 	
-	public distance(int _Id, int _jarak, String _label){
+	public distance(int _Id, double _jarak, String _label){
 		ID = _Id;
 		jarak = _jarak;
 		label = _label;
@@ -23,7 +23,7 @@ public class distance {
 		ID = iD;
 	}
 
-	public int getJarak() {
+	public double getJarak() {
 		return jarak;
 	}
 
