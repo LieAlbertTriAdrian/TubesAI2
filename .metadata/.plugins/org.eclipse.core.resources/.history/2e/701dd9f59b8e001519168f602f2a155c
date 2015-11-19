@@ -35,7 +35,6 @@ public class kNN {
 	}
 	
 	public ArrayList<Integer> HitungJarakFull(Instance A){
-		
 		return null;
 	}
 	
