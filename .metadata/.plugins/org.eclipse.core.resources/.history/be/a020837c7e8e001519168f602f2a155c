@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Main {
 	
+	
 	public static final int NATRIBUT = 6;
 
 	public static void main(String args[]) throws IOException{
@@ -21,10 +22,10 @@ public class Main {
 			String[] data = strLine.split(",");
 			
 			Car car = new Car();
-			for(int i=0;i<data.length-1;i++){
+			for(int i=0;i<NATRIBUT;i++){
 				car.addAtr(data[i]);
 			}
-			car.setKelas(data[data.length-1]);
+			car.setKelas(data[6]);
 			listCar.add(car);
 		}
 		br.close();
@@ -34,7 +35,8 @@ public class Main {
 		nb.process();
 		
 		//Analisis KNN
-			
+		
+		
 	}
 	
 }
