@@ -24,17 +24,34 @@ public class kNN {
 		return InstanceList;
 	};
 	
-	public int HitungJarak(Instance A, Instance B){
+	public double HitungJarak(Instance A, Instance B){
 		int numAttributes = A.getListAtr().size();
-	
-		int jarak = 0;
+		Boolean isNumeric = false; //ASUMSI AWAL
+		double jarak = 0;
 		for(int i = 0; i<numAttributes; i++){
-			if(!A.getAtr(i).equals(B.getAtr(i))){
-				jarak++;
+			
+			//Mengidentifikasi apakah nominal atau numeric. GUnakan eucledian untuk numeric data.
+			if (!isNumeric){ //nominal data
+				if(!A.getAtr(i).equals(B.getAtr(i))){
+					jarak++;
+				}
+			} else{ //numeric data, gunakan eucledian distance
+				double eucledianDist;
+				double valueA = Double.parseDouble(A.getAtr(i));
+				double valueB = Double.parseDouble(B.getAtr(i));
+				double AminusB = valueA-valueB;
+				eucledianDist = (Math.pow(AminusB,2));
+				jarak = jarak + eucledianDist;
 			}
 		}
 		return jarak;
 	}
+	
+	
+	
+	
+	
+	
 	
 	public ArrayList<distance> HitungJarakFull(Instance A){
 		//Inisialisasi Array Jarak
