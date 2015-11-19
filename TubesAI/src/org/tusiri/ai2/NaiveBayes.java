@@ -10,10 +10,10 @@ public class NaiveBayes {
 		public int count;
 	}
 	
-	private ArrayList<Car> data;
+	private ArrayList<Instance> data;
 	private ArrayList<String> listKelas;
 	
-	public NaiveBayes(ArrayList<Car> data){
+	public NaiveBayes(ArrayList<Instance> data){
 		/*ArrayList<Car> listCar = new ArrayList<Car>(data.size());
 		for (Car car : data){
 			listCar.add(new Car(car));
