@@ -24,6 +24,24 @@ public class kNN {
 		return InstanceList;
 	};
 	
+	
+	
+	public void standardizeTrainingSetNumeric() {
+		Boolean isNumeric = true; // ASUMSI AWAL
+		for (Instance e : getInstanceList()){
+			int numAttributes = e.getListAtr().size();
+			for(int i = 0; i<numAttributes; i++){
+				//Mengidentifikasi apakah nominal atau numeric. Standarkan data jika numeric
+				if (!isNumeric){ //nominal data
+					//DO Nothing
+				} else{ //numeric data, nilai harus distandardkan
+					//Later
+				}
+			}
+		}
+	}
+
+	
 	public double HitungJarak(Instance A, Instance B){
 		int numAttributes = A.getListAtr().size();
 		Boolean isNumeric = false; //ASUMSI AWAL
@@ -48,11 +66,6 @@ public class kNN {
 	}
 	
 	
-	
-	
-	
-	
-	
 	public ArrayList<distance> HitungJarakFull(Instance A){
 		//Inisialisasi Array Jarak
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
@@ -61,7 +74,7 @@ public class kNN {
 		for (Instance e : getInstanceList()){
 			if (A.getId() != e.getId()){
 				int ID = e.getId();
-				int Jarak = HitungJarak(A, e);
+				double Jarak = HitungJarak(A, e);
 				String Label = e.getKelas();
 				distance dst = new distance(ID,Jarak,Label);
 				arrayJarak.add(dst);
