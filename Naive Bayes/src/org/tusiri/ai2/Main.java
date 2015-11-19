@@ -15,10 +15,10 @@ public class Main {
 	public static void main(String args[]) throws IOException{
 		String file;
 		//Ivan Andrianto's File of dataset
-		file = "C:\\Users\\Ivan\\Downloads\\TubesAI2-master\\TubesAI2-master\\dataset\\Car Evaluation\\car.data";
+		//file = "C:\\Users\\Ivan\\Downloads\\TubesAI2-master\\TubesAI2-master\\dataset\\Car Evaluation\\car.data";
 		
 		//Albert Tri Adrian's File of dataset
-		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/CarEvaluation/car.data";
+		file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/CarEvaluation/car.data";
 
 		//Albert Tri Adrian's File of dataset (Testing)
 		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/dataTest/test.data";
@@ -43,21 +43,32 @@ public class Main {
 		//Analysis Naive Bayes
 		NaiveBayes nb = new NaiveBayes(listCar);
 		nb.process();
-		Car testInstance = listCar.get(0);
-		//Instance yang mmau dites
-		/*Car testInstance = new Car();
-		testInstance.addAtr("sunny");
-		testInstance.addAtr("cool");
-		testInstance.addAtr("high");
-		testInstance.addAtr("true");*/
-
-		String result = nb.getClassResult(testInstance);
-		System.out.println("hasil");
-		System.out.println(result);
 		
-
-		//Analisis KNN
+		int success = 0;
+		int failed = 0;
+		for(int k=0;k<listCar.size();k++){
+			Car instance = listCar.get(k);
+			System.out.print("Instance : ");
+			instance.printCar();
+			System.out.print("Naive Bayes Result : ");
+			String result = nb.getClassResult(instance);
+			System.out.println(result);
+			System.out.print("Status : ");
+			if (result.equals(instance.getKelas())){
+				success++;
+				System.out.println("Success");
+			}
+			else{
+				failed++;
+				System.out.println("failed");
+			}
+			System.out.println();
+		}
 		
+		System.out.println("Summary");
+		System.out.println("Success : " + success);
+		System.out.println("Faild : " + failed);
+
 		
 	}
 	

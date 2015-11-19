@@ -41,11 +41,6 @@ public class NaiveBayes {
 	private ArrayList<ArrayList<AtrKelasCountProb>> listAtrKelasCountProbMatrix = new ArrayList<ArrayList<AtrKelasCountProb>>();
 	
 	public NaiveBayes(ArrayList<Car> data){
-		/*ArrayList<Car> listCar = new ArrayList<Car>(data.size());
-		for (Car car : data){
-			listCar.add(new Car(car));
-		}
-		this.data = listCar;*/
 		this.data = data;
 	}
 	
@@ -110,41 +105,6 @@ public class NaiveBayes {
 		}
 	}	
 	
-	public void countAppearance(){
-		int nAtribut = Main.NATRIBUT;
-		int i;
-		for(i=0;i<nAtribut;i++){
-			int x=0;
-			ArrayList<AtrKelasCount> l = new ArrayList<AtrKelasCount>();
-			for (int j=0;j<data.size();j++){
-				//Jika value atribut belum pernah ditemukan sebelumnya,
-				//Tambahkan ke l, Object AtrKelasCount sebanyak jumlah kelas, dengan nilai count 0
-				if(!(isValueFound(l,data.get(j).getAtr(i)))){
-					for (int k=0;k<listKelas.size();k++){
-						AtrKelasCount akc = new AtrKelasCount();
-						akc.atribut = data.get(j).getAtr(i);
-						akc.kelas = listKelas.get(k);
-						akc.count = 0;
-						l.add(akc);
-					}
-				}
-				//Tambahkan data saat ini
-				addCount(l,data.get(j).getAtr(i),data.get(j).getKelas());
-			}
-			int total=0;
-			
-			System.out.println("\n" + attribute.get(i) + " Class" + " Count");
-			for(int m=0;m<l.size();m++){
-				System.out.print(l.get(m).atribut+" ");
-				System.out.print(l.get(m).kelas+" ");
-				System.out.println(l.get(m).count);
-				total += l.get(m).count;
-			}
-			System.out.println(total);
-		}
-	
-	}
-
 	public void constructProbabilityMatrix(){
 		int nAtribut = Main.NATRIBUT;
 		System.out.println();
@@ -197,30 +157,6 @@ public class NaiveBayes {
 	}
 	
 	
-	public void countClassAppearance(){
-		ArrayList<KelasCount> l = new ArrayList<KelasCount>();
-
-		for (int k=0;k<listKelas.size();k++){
-			KelasCount kc = new KelasCount();
-			kc.kelas = listKelas.get(k);
-			kc.count = 0;
-			l.add(kc);
-		}
-		
-		for (int j= 0; j < data.size(); j++){
-			for (int k =0; k < l.size(); k++){
-				if (data.get(j).getKelas().equals(l.get(k).kelas)){
-					l.get(k).count++;
-				}
-			}
-		}
-		
-		for (int m=0;m<l.size();m++){
-			System.out.print("Kelas : " + l.get(m).kelas + ", ");
-			System.out.println("Count : " + l.get(m).count);
-		}
-			
-	}	
 	
 	public void countClassProbAppearance(){
 		listKelasCountProb = new ArrayList<KelasCountProb>();

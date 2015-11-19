@@ -16,10 +16,10 @@ public class Main10Fold {
 		System.out.println("10-FOLD");
 		String file;
 		//Ivan Andrianto's File of dataset
-		file = "C:\\Users\\Ivan\\Downloads\\TubesAI2-master\\TubesAI2-master\\dataset\\Car Evaluation\\car.data";
+		//file = "C:\\Users\\Ivan\\Downloads\\TubesAI2-master\\TubesAI2-master\\dataset\\Car Evaluation\\car.data";
 		
 		//Albert Tri Adrian's File of dataset
-		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/CarEvaluation/car.data";
+		file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/CarEvaluation/car.data";
 	 
 		FileInputStream fstream = new FileInputStream(file);
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
