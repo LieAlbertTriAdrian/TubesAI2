@@ -16,11 +16,12 @@ public class Main {
 		FileInputStream fstream = new FileInputStream("C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\dataset\\CarEvaluation\\car.data");
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		String strLine;
-		ArrayList<Car> listCar = new ArrayList<Car>();
+		ArrayList<Instance> listCar = new ArrayList<Instance>();
+		int ID = 1;
 		while ((strLine = br.readLine()) != null)   {
 			String[] data = strLine.split(",");
 			
-			Car car = new Car();
+			Instance car = new Instance(ID);
 			for(int i=0;i<data.length-1;i++){
 				car.addAtr(data[i]);
 			}
@@ -29,12 +30,16 @@ public class Main {
 		}
 		br.close();
 		
+		/*
 		//Analysis Naive Bayes
 		NaiveBayes nb = new NaiveBayes(listCar);
-		nb.process();
+		nb.process();*/
 		
 		//Analisis KNN
 			
+		kNN kn = new kNN(listCar);
+		//System.out.println(kn.HitungJarak(kn.getInstanceList().get(0), kn.getInstanceList().get(2)));
+		
 	}
 	
 }
