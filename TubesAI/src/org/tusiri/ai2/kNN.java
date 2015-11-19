@@ -59,7 +59,7 @@ public class kNN {
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
 		arrayJarak = HitungJarakFull(InstanceList.get(0));
 		for (distance e: arrayJarak){
-			System.out.println(e.getID() + " Jarak :"+e.getJarak());
+			//System.out.println(e.getID() + " Jarak :"+e.getJarak());
 		}
 	}
 	
