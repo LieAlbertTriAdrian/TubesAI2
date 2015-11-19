@@ -15,10 +15,10 @@ public class Main {
 	public static void main(String args[]) throws IOException{
 		String file;
 		//Ivan Andrianto's File of dataset
-		//file = "C:\\Users\\Ivan\\Downloads\\TubesAI2-master\\TubesAI2-master\\dataset\\Car Evaluation\\car.data";
+		file = "C:\\Users\\Ivan\\Downloads\\TubesAI2-master\\TubesAI2-master\\dataset\\Car Evaluation\\car.data";
 		
 		//Albert Tri Adrian's File of dataset
-		file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/CarEvaluation/car.data";
+		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/CarEvaluation/car.data";
 
 		//Albert Tri Adrian's File of dataset (Testing)
 		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/dataTest/test.data";
@@ -42,7 +42,7 @@ public class Main {
 		
 		//Analysis Naive Bayes
 		NaiveBayes nb = new NaiveBayes(listCar);
-		
+		nb.process();
 		Car testInstance = listCar.get(0);
 		//Instance yang mmau dites
 		/*Car testInstance = new Car();
@@ -51,7 +51,8 @@ public class Main {
 		testInstance.addAtr("high");
 		testInstance.addAtr("true");*/
 
-		String result = nb.process(testInstance);
+		String result = nb.getClassResult(testInstance);
+		System.out.println("hasil");
 		System.out.println(result);
 		
 
@@ -61,3 +62,4 @@ public class Main {
 	}
 	
 }
+
