@@ -29,5 +29,4 @@ public class Car {
 	
 	public String getKelas(){return kelas;}
 	public void setKelas(String kelas){this.kelas = kelas;}
-	
 }

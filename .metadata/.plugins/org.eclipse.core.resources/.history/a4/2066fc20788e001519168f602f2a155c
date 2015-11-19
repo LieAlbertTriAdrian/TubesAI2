@@ -1,0 +1,8 @@
+package kNN;
+
+public static final int NATRIBUT = 10;
+
+public class Main {
+	
+
+}

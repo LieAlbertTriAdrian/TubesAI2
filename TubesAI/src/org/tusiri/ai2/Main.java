@@ -1,5 +1,6 @@
 package org.tusiri.ai2;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class Main {
 	public static final int NATRIBUT = 6;
 
 	public static void main(String args[]) throws IOException{
-		FileInputStream fstream = new FileInputStream("C:\\Users\\Ivan\\Downloads\\TubesAI2-master\\TubesAI2-master\\dataset\\Car Evaluation\\car.data");
+		FileInputStream fstream = new FileInputStream("C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\dataset\\CarEvaluation\\car.data");
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		String strLine;
 		ArrayList<Car> listCar = new ArrayList<Car>();
