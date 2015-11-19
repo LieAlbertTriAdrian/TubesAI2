@@ -13,15 +13,16 @@ public class Main {
 	public static final int NATRIBUT = 6;
 
 	public static void main(String args[]) throws IOException{
-		FileInputStream fstream = new FileInputStream("C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\dataset\\CarEvaluation\\car.data");
+		FileInputStream fstream = new FileInputStream("C:\\Users\\Marco Orlando\\Documents\\GitHub\\TubesAI2\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data");
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		String strLine;
 		ArrayList<Instance> listCar = new ArrayList<Instance>();
-		int ID = 1;
+		int ID = 0;
 		while ((strLine = br.readLine()) != null)   {
 			String[] data = strLine.split(",");
 			
 			Instance car = new Instance(ID);
+			ID++;
 			for(int i=0;i<data.length-1;i++){
 				car.addAtr(data[i]);
 			}
@@ -38,6 +39,9 @@ public class Main {
 		//Analisis KNN
 			
 		kNN kn = new kNN(listCar);
+		ArrayList<distance> ar = new ArrayList<distance>();
+		kn.FullSet();
+		//ar = kn.HitungJarakFull(kn.getInstanceList().get(0));
 		//System.out.println(kn.HitungJarak(kn.getInstanceList().get(0), kn.getInstanceList().get(2)));
 		
 	}

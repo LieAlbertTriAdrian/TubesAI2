@@ -30,6 +30,10 @@ public class Instance {
 		return atr.get(index);
 	}
 	
+	public int getId(){
+		return ID;
+	}
+	
 	public String getKelas(){return kelas;}
 	public void setKelas(String kelas){this.kelas = kelas;}
 }

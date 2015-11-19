@@ -2,6 +2,7 @@ package org.tusiri.ai2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class NaiveBayes {
@@ -35,7 +36,10 @@ public class NaiveBayes {
 	List<String> attribute = new ArrayList<String>(Arrays.asList("buying", "maint","doors","persons","lug_boot","safety"));
 	private ArrayList<Car> data;
 	private ArrayList<String> listKelas;
-
+	private ArrayList<AtrKelasCountProb> listAtrKelasCountProb;
+	private ArrayList<KelasCountProb> listKelasCountProb;	
+	private ArrayList<ArrayList<AtrKelasCountProb>> listAtrKelasCountProbMatrix = new ArrayList<ArrayList<AtrKelasCountProb>>();
+	
 	public NaiveBayes(ArrayList<Car> data){
 		/*ArrayList<Car> listCar = new ArrayList<Car>(data.size());
 		for (Car car : data){
@@ -147,45 +151,46 @@ public class NaiveBayes {
 		int i;
 		for(i=0;i<nAtribut;i++){
 			int x=0;
-			ArrayList<AtrKelasCountProb> l = new ArrayList<AtrKelasCountProb>();
+			listAtrKelasCountProb = new ArrayList<AtrKelasCountProb>();
 			for (int j=0;j<data.size();j++){
 				//Jika value atribut belum pernah ditemukan sebelumnya,
 				//Tambahkan ke l, Object AtrKelasCount sebanyak jumlah kelas, dengan nilai count 0
-				if(!(isValueFoundProb(l,data.get(j).getAtr(i)))){
+				if(!(isValueFoundProb(listAtrKelasCountProb,data.get(j).getAtr(i)))){
 					for (int k=0;k<listKelas.size();k++){
 						AtrKelasCountProb akc = new AtrKelasCountProb();
 						akc.atribut = data.get(j).getAtr(i);
 						akc.kelas = listKelas.get(k);
 						akc.count = 0;
 						akc.probability = 0.0;
-						l.add(akc);
+						listAtrKelasCountProb.add(akc);
 					}
 				}
 				//Tambahkan data saat ini
-				addCountProb(l,data.get(j).getAtr(i),data.get(j).getKelas());
+				addCountProb(listAtrKelasCountProb,data.get(j).getAtr(i),data.get(j).getKelas());
 			}
 			int total=0;
 			
 			System.out.println("\n" + attribute.get(i) + " Class" + " Count");
-			for(int m=0;m<l.size();m++){
-				System.out.print(l.get(m).atribut+" ");
-				System.out.print(l.get(m).kelas+" ");
-				System.out.print(l.get(m).count+" ");
+			for(int m=0;m<listAtrKelasCountProb.size();m++){
+				System.out.print(listAtrKelasCountProb.get(m).atribut+" ");
+				System.out.print(listAtrKelasCountProb.get(m).kelas+" ");
+				System.out.print(listAtrKelasCountProb.get(m).count+" ");
 				double penyebut = 0;
-				for (int z =0;z< l.size();z++){
-					if (l.get(z).kelas.equals(l.get(m).kelas)){
-						penyebut += l.get(z).count;
+				for (int z =0;z< listAtrKelasCountProb.size();z++){
+					if (listAtrKelasCountProb.get(z).kelas.equals(listAtrKelasCountProb.get(m).kelas)){
+						penyebut += listAtrKelasCountProb.get(z).count;
 					}
 				}
 				if (penyebut != 0.0){
-					l.get(m).probability = l.get(m).count / penyebut;
-					System.out.println(l.get(m).probability);	
+					listAtrKelasCountProb.get(m).probability = listAtrKelasCountProb.get(m).count / penyebut;
+					System.out.println(listAtrKelasCountProb.get(m).probability);	
 				}
 				else{
 					System.out.println(penyebut);
 				}
-				total += l.get(m).count;
+				total += listAtrKelasCountProb.get(m).count;
 			}
+			listAtrKelasCountProbMatrix.add(listAtrKelasCountProb);
 			System.out.println(total);
 		}
 	}
@@ -217,45 +222,98 @@ public class NaiveBayes {
 	}	
 	
 	public void countClassProbAppearance(){
-		ArrayList<KelasCountProb> l = new ArrayList<KelasCountProb>();
+		listKelasCountProb = new ArrayList<KelasCountProb>();
 
 		for (int k=0;k<listKelas.size();k++){
 			KelasCountProb kcp = new KelasCountProb();
 			kcp.kelas = listKelas.get(k);
 			kcp.count = 0;
 			kcp.probability = 0.0;
-			l.add(kcp);
+			listKelasCountProb.add(kcp);
 		}
 		
 		for (int j= 0; j < data.size(); j++){
-			for (int k =0; k < l.size(); k++){
-				if (data.get(j).getKelas().equals(l.get(k).kelas)){
-					l.get(k).count++;
+			for (int k =0; k < listKelasCountProb.size(); k++){
+				if (data.get(j).getKelas().equals(listKelasCountProb.get(k).kelas)){
+					listKelasCountProb.get(k).count++;
 				}
 			}
 		}
 		
 		double penyebut = 0.0;
-		for (int z = 0; z < l.size(); z++){
-			penyebut += l.get(z).count;
+		for (int z = 0; z < listKelasCountProb.size(); z++){
+			penyebut += listKelasCountProb.get(z).count;
 		}
 		
-		for (int m=0;m<l.size();m++){
-			System.out.print("Kelas : " + l.get(m).kelas + ", ");
-			System.out.print("Count : " + l.get(m).count + ", ");
-			l.get(m).probability = l.get(m).count / penyebut;
-			System.out.println("Probability : " + l.get(m).probability );
+		for (int m=0;m<listKelasCountProb.size();m++){
+			System.out.print("Kelas : " + listKelasCountProb.get(m).kelas + ", ");
+			System.out.print("Count : " + listKelasCountProb.get(m).count + ", ");
+			listKelasCountProb.get(m).probability = listKelasCountProb.get(m).count / penyebut;
+			System.out.println("Probability : " + listKelasCountProb.get(m).probability );
 		}
 		
 	}
 		
+	public String NaiveBayesAnalysis(Car instance){
+		ArrayList<String> listKelas = getListKelas();
+		ArrayList<Double> values = new ArrayList<Double>();
+		
+		for (int i = 0; i < listKelas.size(); i++){
+				Double value = 0.0;
+				int j = 0;
+				boolean found = false;
+				while (j < listKelas.size() && !found){
+					if (listKelas.get(i).equals(listKelasCountProb.get(j).kelas)){
+						found = true;
+						value += listKelasCountProb.get(j).probability;
+						//System.out.println(value);
+						for (int k = 0 ; k< listAtrKelasCountProbMatrix.size(); k++){	
+							for (int z = 0; z < listAtrKelasCountProbMatrix.get(k).size();z++){
+								/*System.out.print(listAtrKelasCountProbMatrix.get(k).get(z).kelas + " ");
+								System.out.println(listAtrKelasCountProbMatrix.get(k).get(z).atribut);*/
+													
+								if (listKelas.get(i).equals(listAtrKelasCountProbMatrix.get(k).get(z).kelas)
+										&& 
+									instance.getListAtr().get(k).equals(listAtrKelasCountProbMatrix.get(k).get(z).atribut) ){
+										
+										/*System.out.println("Kelas :" + listAtrKelasCountProbMatrix.get(k).get(z).kelas);
+										System.out.println("Atribute :" + listAtrKelasCountProbMatrix.get(k).get(z).atribut);
+										System.out.println("Nilai :" + listAtrKelasCountProbMatrix.get(k).get(z).probability);*/
+										value *= listAtrKelasCountProbMatrix.get(k).get(z).probability;
+								}
+							}
+						}
+					}
+					j++;
+					
+				}
+				values.add(value);
+		}
+		
+		Double maxValue = Collections.max(values);
+		int maxValueIndex = 0;
+		int y = 0;
+		boolean found = false;
+		while (y < values.size() && !found){
+			if (values.get(y) == maxValue){
+				maxValueIndex = y;
+				found = true;
+			}else{
+				y++;	
+			}
+		}
+
+		return listKelas.get(y);
+		
+	}
 	
-	
-	public void process(){
+	public String process(Car instance){
 		ArrayList<String> listKelas = getListKelas();
 		System.out.println(listKelas);
 		//countAppearance();
 		constructProbabilityMatrix();
 		countClassProbAppearance();
+		String classResult = NaiveBayesAnalysis(instance);
+		return classResult;
 	}
 }
