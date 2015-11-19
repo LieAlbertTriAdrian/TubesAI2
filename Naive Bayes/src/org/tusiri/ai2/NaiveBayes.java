@@ -193,6 +193,7 @@ public class NaiveBayes {
 			listAtrKelasCountProbMatrix.add(listAtrKelasCountProb);
 			System.out.println(total);
 		}
+		
 	}
 	
 	
@@ -307,12 +308,15 @@ public class NaiveBayes {
 		
 	}
 	
-	public String process(Car instance){
+	public void process(){
 		ArrayList<String> listKelas = getListKelas();
 		System.out.println(listKelas);
 		//countAppearance();
 		constructProbabilityMatrix();
 		countClassProbAppearance();
+	}
+	
+	public String getClassResult(Car instance){
 		String classResult = NaiveBayesAnalysis(instance);
 		return classResult;
 	}
