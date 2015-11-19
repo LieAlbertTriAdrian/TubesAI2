@@ -65,9 +65,10 @@ public class Main {
 			System.out.println();
 		}
 		
-		System.out.println("Summary");
-		System.out.println("Success : " + success);
-		System.out.println("Faild : " + failed);
+		System.out.println("=============Summary==========");
+		double totalInstances = success + failed;
+		System.out.println("Success : " + success + "("+success /totalInstances * 100 +"%)");
+		System.out.println("Faild : " + failed + "("+failed / totalInstances * 100 +"%)");
 
 		
 	}
