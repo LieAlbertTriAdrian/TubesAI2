@@ -266,13 +266,20 @@ public class NaiveBayes {
 					if (listKelas.get(i).equals(listKelasCountProb.get(j).kelas)){
 						found = true;
 						value += listKelasCountProb.get(j).probability;
+						//System.out.println(value);
 						for (int k = 0 ; k< listAtrKelasCountProbMatrix.size(); k++){	
 							for (int z = 0; z < listAtrKelasCountProbMatrix.get(k).size();z++){
-								if (listKelas.get(i).equals(listAtrKelasCountProbMatrix.get(k).get(j).kelas)
+								/*System.out.print(listAtrKelasCountProbMatrix.get(k).get(z).kelas + " ");
+								System.out.println(listAtrKelasCountProbMatrix.get(k).get(z).atribut);*/
+													
+								if (listKelas.get(i).equals(listAtrKelasCountProbMatrix.get(k).get(z).kelas)
 										&& 
-									instance.getListAtr().get(k).equals(listAtrKelasCountProbMatrix.get(k).get(j).atribut) ){
+									instance.getListAtr().get(k).equals(listAtrKelasCountProbMatrix.get(k).get(z).atribut) ){
 										
-										value += listAtrKelasCountProbMatrix.get(k).get(j).probability;
+										/*System.out.println("Kelas :" + listAtrKelasCountProbMatrix.get(k).get(z).kelas);
+										System.out.println("Atribute :" + listAtrKelasCountProbMatrix.get(k).get(z).atribut);
+										System.out.println("Nilai :" + listAtrKelasCountProbMatrix.get(k).get(z).probability);*/
+										value *= listAtrKelasCountProbMatrix.get(k).get(z).probability;
 								}
 							}
 						}
@@ -291,9 +298,11 @@ public class NaiveBayes {
 			if (values.get(y) == maxValue){
 				maxValueIndex = y;
 				found = true;
+			}else{
+				y++;	
 			}
-			y++;
 		}
+
 		return listKelas.get(y);
 		
 	}
