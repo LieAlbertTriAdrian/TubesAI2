@@ -126,9 +126,13 @@ public class kNN {
 		
 		arrayJarakFull = HitungJarakFull(I);
 
-		
 		for (distance e: arrayJarak){
 			//System.out.println(e.getID() + " Jarak :"+e.getJarak());
+		}
+		
+		//remove distance for k-fold
+		for(int i = iAwal; i<iAkhir-1; i++){
+			
 		}
 
 		//SORT arrayJarak berdasar jarak, asscending
@@ -175,9 +179,6 @@ public class kNN {
 				Max = arrayCandidate.get(i);
 			}
 		}
-		
-		
-		
 		
 		//memasukan Instance dengan label baru ke InstanceListNew
 		Instance newInstance = new Instance(Max.getLabel(),I.getId());
