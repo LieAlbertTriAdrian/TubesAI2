@@ -193,10 +193,9 @@ public class kNN {
 	
 	
 	public void fullSet(){
-		/*for (Instance e : InstanceList){
-		InstanceList.	
+		for (Instance e : InstanceList){
 		}
-		*/
+		
 	}
 	
 	
