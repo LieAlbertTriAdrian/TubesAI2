@@ -63,7 +63,7 @@ public class kNN {
 			//Mengidentifikasi apakah nominal atau numeric. GUnakan eucledian untuk numeric data.
 			if (!isNumeric){ //nominal data
 				if(!A.getAtr(i).equals(B.getAtr(i))){
-					jarak++;
+					jarak=jarak+1;
 				}
 			} else{ //numeric data, gunakan eucledian distance
 				double eucledianDist;
@@ -196,17 +196,55 @@ public class kNN {
 	public void fullSet(){
 		for (Instance e : InstanceList){
 			classifyInstance(e,0,0,-1);
-		}
-		for (int i =0;i<InstanceList.size();i++){
-			System.out.println(InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
-		}
-		
+		}		
+		//analisisAkurasi();
 	}
 	
 	
 	
 	
 	public void nFold(int fold){
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void analisisAkurasi(){
+		int jumlahInstance = InstanceList.size();
+		Double jumlahSalah = 0.00;
+		Double jumlahBenar = 0.00;
+		Double akurasi;
+		
+		
+		
+		//Penghitungan salah dan benar
+		for (int i =0;i<InstanceList.size();i++){
+			if(InstanceList.get(i).getKelas().equals(InstanceListNew.get(i).getKelas())){
+				jumlahBenar=jumlahBenar+1;
+			}
+			else{
+				jumlahSalah=jumlahSalah+1;
+			}
+		}
+		
+		//Tampilan analisis
+		for (int i =0;i<InstanceList.size();i++){
+			System.out.println("Kelas Awal: "+InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
+		}
+		
+		System.out.println("Jumlah klasifikasi benar: "+ jumlahBenar);
+		System.out.println("Jumlah klasifikasi salah: " +jumlahSalah);
+		akurasi = jumlahBenar/(double)jumlahInstance*100;
+		System.out.println("Persentase eror: "+ akurasi +"%");
+		
+		
 		
 	}
 	
