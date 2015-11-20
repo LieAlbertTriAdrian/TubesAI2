@@ -5,10 +5,26 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Main10Fold {
 	
+	// Implementing Fisher–Yates shuffle
+		  static void shuffleArray(ArrayList<Car> al)
+		  {
+		    // If running on Java 6 or older, use `new Random()` on RHS here
+		    Random rnd = ThreadLocalRandom.current();
+		    for (int i = al.size() - 1; i > 0; i--)
+		    {
+		      int index = rnd.nextInt(i + 1);
+		      // Simple swap
+		      Car instance = al.get(index);
+		      al.set(index,al.get(i));
+		      al.set(i,instance);
+		    }
+		  }
 	
 	public static final int NATRIBUT = 6;
 	public static final int NFOLD = 10;
@@ -16,7 +32,9 @@ public class Main10Fold {
 		System.out.println("10-FOLD");
 		String file;
 		//Ivan Andrianto's File of dataset
-		file = "C:\\Users\\Ivan\\Downloads\\TubesAI2-master\\TubesAI2-master\\dataset\\Car Evaluation\\car.data";
+		file = "C:\\TubesAI2\\dataset\\CarEvaluation\\car.data";
+		//file = "C:\\TubesAI2\\dataset\\Zoo\\zoo.data";
+		//file = "C:\\TubesAI2\\dataset\\dataTest\\test.data";
 		
 		//Albert Tri Adrian's File of dataset
 		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/CarEvaluation/car.data";
@@ -32,12 +50,22 @@ public class Main10Fold {
 			for(int i=0;i<NATRIBUT;i++){
 				car.addAtr(data[i]);
 			}
-			car.setKelas(data[6]);
+			car.setKelas(data[NATRIBUT]);
 			listCar.add(car);
 		}
 		br.close();
+		shuffleArray(listCar);
+		for(int i=0;i<10;i++){
+			listCar.get(i).printCar();
+		}
+		
 		int dataSize = listCar.size();
+		//int dataPerFold = dataSize/NFOLD;
 		int dataPerFold = dataSize/NFOLD;
+		int sisa = dataSize % NFOLD;
+		System.out.println(sisa);
+		int dataPerFoldLebih = dataPerFold + 1;//Jika bukan kelipatan 10
+		
 		int success=0;
 		int failed = 0;
 		for(int i=0;i<NFOLD;i++){
@@ -45,8 +73,27 @@ public class Main10Fold {
 			int count = 0;
 			ArrayList<Car> listTest = new ArrayList<Car>();
 			ArrayList<Car> listTraining = new ArrayList<Car>();
+			int start = 0;
+			for(int k=0;k<i;k++){
+				if(k<sisa){
+					start +=dataPerFoldLebih; 
+				} else {
+					start += dataPerFold;
+				}
+			}
+			System.out.println("start = " + start);
+			
+			int jumlahData = 0;
+			if(i<sisa){
+				jumlahData = dataPerFoldLebih;
+			} else {
+				jumlahData = dataPerFold;
+			}
+			
 			for(int j=0;j<dataSize;j++){
-				if(((j >= i*dataPerFold) && (j < (i+1)*dataPerFold)) || ((i==NFOLD-1) && (j >= NFOLD * dataPerFold))){
+				if(j>=start && j<start+jumlahData){
+				//if(((j >= i*dataPerFold) && (j < (i+1)*dataPerFold)) || ((i==NFOLD-1) && (j >= NFOLD * dataPerFold))){
+				//if((j >= i*dataPerFold) && (j < (i+1)*dataPerFold)){
 					//Masukkan ke data test
 					listTest.add(listCar.get(j));
 				} else {
