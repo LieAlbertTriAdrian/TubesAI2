@@ -10,21 +10,20 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Main10Fold {
-	
-	// Implementing Fisher–Yates shuffle
-		  static void shuffleArray(ArrayList<Car> al)
-		  {
-		    // If running on Java 6 or older, use `new Random()` on RHS here
-		    Random rnd = ThreadLocalRandom.current();
-		    for (int i = al.size() - 1; i > 0; i--)
-		    {
-		      int index = rnd.nextInt(i + 1);
-		      // Simple swap
-		      Car instance = al.get(index);
-		      al.set(index,al.get(i));
-		      al.set(i,instance);
-		    }
-		  }
+
+	  static void shuffleArray(ArrayList<Car> al)
+	  {
+	    // If running on Java 6 or older, use `new Random()` on RHS here
+	    Random rnd = ThreadLocalRandom.current();
+	    for (int i = al.size() - 1; i > 0; i--)
+	    {
+	      int index = rnd.nextInt(i + 1);
+	      // Simple swap
+	      Car instance = al.get(index);
+	      al.set(index,al.get(i));
+	      al.set(i,instance);
+	    }
+	  }
 	
 	public static final int NATRIBUT = 6;
 	public static final int NFOLD = 10;
@@ -39,6 +38,9 @@ public class Main10Fold {
 		//Albert Tri Adrian's File of dataset
 		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/CarEvaluation/car.data";
 	 
+		
+		
+		
 		FileInputStream fstream = new FileInputStream(file);
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		String strLine;
@@ -54,6 +56,8 @@ public class Main10Fold {
 			listCar.add(car);
 		}
 		br.close();
+		
+		
 		shuffleArray(listCar);
 		for(int i=0;i<10;i++){
 			listCar.get(i).printCar();
