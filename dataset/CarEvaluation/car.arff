@@ -1,12 +1,12 @@
 @relation car2
 
 @attribute buying {vhigh,high,med,low}
-@attribute ' maint' {vhigh,high,med,low}
-@attribute ' doors' {2.0,3.0,4.0,5more}
-@attribute ' persons' {2.0,4.0,more}
-@attribute ' lug_boot' {small,med,big}
-@attribute ' safety' {low,med,high}
-@attribute ' ClassValues' {unacc,acc,vgood,good}
+@attribute maint {vhigh,high,med,low}
+@attribute doors {2.0,3.0,4.0,5more}
+@attribute persons {2.0,4.0,more}
+@attribute lug_boot {small,med,big}
+@attribute safety {low,med,high}
+@attribute ClassValues {unacc,acc,vgood,good}
 
 @data
 vhigh,vhigh,2.0,2.0,small,low,unacc
