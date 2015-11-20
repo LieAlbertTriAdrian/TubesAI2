@@ -12,8 +12,8 @@ public class Instance {
 		ID = i;
 	}
 	
-	public Instance(Instance car, int i){
-		kelas = car.kelas;
+	public Instance(String car, int i){
+		kelas = car;
 		atr = new ArrayList<String>();
 		ID = i;
 	}
@@ -22,16 +22,20 @@ public class Instance {
 		atr.add(value);
 	}
 	
+	public String getAtr(int i){
+		return atr.get(i);
+	}
+	
 	public ArrayList<String> getListAtr(){
 		return atr;
 	}
 	
-	public String getAtr(int index){
-		return atr.get(index);
-	}
-	
 	public int getId(){
 		return ID;
+	}
+	
+	public ArrayList<String> getAllAtributes(){
+		return atr;
 	}
 	
 	public String getKelas(){return kelas;}
