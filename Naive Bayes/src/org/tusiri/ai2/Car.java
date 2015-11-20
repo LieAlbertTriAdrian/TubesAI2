@@ -30,4 +30,10 @@ public class Car {
 	public String getKelas(){return kelas;}
 	public void setKelas(String kelas){this.kelas = kelas;}
 	
+	public void printCar(){
+		for (int i=0;i<this.getListAtr().size();i++){
+			System.out.print(this.getListAtr().get(i) + " ");
+		}
+		System.out.println(this.getKelas());
+	}
 }

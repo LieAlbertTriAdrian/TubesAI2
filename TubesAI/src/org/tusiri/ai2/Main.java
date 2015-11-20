@@ -13,8 +13,12 @@ public class Main {
 	public static final int NATRIBUT = 6;
 
 	public static void main(String args[]) throws IOException{
+<<<<<<< HEAD
 		//File Wilhelm : C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data
 		FileInputStream fstream = new FileInputStream("C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data");
+=======
+		FileInputStream fstream = new FileInputStream("C:\\Users\\Marco Orlando\\Documents\\GitHub\\TubesAI2\\TubesAI\\dataset\\Weather\\weather.nominal.data");
+>>>>>>> f4a4b7270940b799d1fbb0761ea3694868eddbf6
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		String strLine;
 		ArrayList<Instance> listCar = new ArrayList<Instance>();
@@ -39,7 +43,7 @@ public class Main {
 		
 		//Analisis KNN
 			
-		kNN kn = new kNN(listCar);
+		kNN kn = new kNN(listCar,1);
 		ArrayList<distance> ar = new ArrayList<distance>();
 		kn.FullSet();
 		//ar = kn.HitungJarakFull(kn.getInstanceList().get(0));
