@@ -121,10 +121,8 @@ public class kNN {
 	
 	public void classifyInstance(Instance I,int indeks,int iAwal, int iAkhir){
 		//Mengubah kelas/label dari Instance menjadi laber Baru hasil KNN
-		
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
 		ArrayList<distance> arrayKNearest  = new ArrayList<distance>();
-		ArrayList<distance> arrayJarakFull = new ArrayList<distance>();
 		
 		arrayJarak = HitungJarakFull(I);
 
