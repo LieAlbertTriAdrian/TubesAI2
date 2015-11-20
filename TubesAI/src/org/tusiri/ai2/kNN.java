@@ -20,6 +20,7 @@ public class kNN {
 
 	public kNN(){
 		InstanceList = new ArrayList<Instance>();
+		InstanceListNew= new ArrayList<Instance>();
 	}
 	
 	public kNN(ArrayList<Instance> CList, int _k){
@@ -28,6 +29,7 @@ public class kNN {
 		for(Instance object: CList){
 			InstanceList.add(object);
 		};
+		InstanceListNew= new ArrayList<Instance>();
 	}
 	
 	public ArrayList<Instance> getInstanceList(){
@@ -119,12 +121,10 @@ public class kNN {
 	
 	public void classifyInstance(Instance I,int indeks,int iAwal, int iAkhir){
 		//Mengubah kelas/label dari Instance menjadi laber Baru hasil KNN
-		
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
 		ArrayList<distance> arrayKNearest  = new ArrayList<distance>();
-		ArrayList<distance> arrayJarakFull = new ArrayList<distance>();
 		
-		arrayJarakFull = HitungJarakFull(I);
+		arrayJarak = HitungJarakFull(I);
 
 		for (distance e: arrayJarak){
 			//System.out.println(e.getID() + " Jarak :"+e.getJarak());
@@ -143,10 +143,10 @@ public class kNN {
 
 		
 		//Tampilkan K-nearest label dan ID
-		for (distance e: arrayKNearest){
+		/*for (distance e: arrayKNearest){
 			System.out.println("ID: " +e.getID() + "    label   :" +
 		e.getLabel());
-		}
+		}*/
 		
 		//Count number of every class
 		ArrayList<voteCandidate> arrayCandidate= new ArrayList<voteCandidate>();
@@ -195,6 +195,10 @@ public class kNN {
 	
 	public void fullSet(){
 		for (Instance e : InstanceList){
+			classifyInstance(e,0,0,-1);
+		}
+		for (int i =0;i<InstanceList.size();i++){
+			System.out.println(InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
 		}
 		
 	}
