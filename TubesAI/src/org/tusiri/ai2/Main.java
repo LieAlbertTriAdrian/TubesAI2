@@ -40,7 +40,7 @@ public class Main {
 		
 		//Analisis KNN
 			
-		kNN kn = new kNN(listCar,3);
+		kNN kn = new kNN(listCar,2);
 		ArrayList<distance> ar = new ArrayList<distance>();
 		//kn.fullSet();
 		kn.nFold(10);
