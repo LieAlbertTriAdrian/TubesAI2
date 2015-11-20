@@ -38,9 +38,8 @@ public class Main {
 		
 		//Analisis KNN
 			
-		kNN kn = new kNN(listCar,1);
-		ArrayList<distance> ar = new ArrayList<distance>();
-		kn.FullSet();
+		kNN kn = new kNN(listCar,10);
+		kn.fullSet();
 		//ar = kn.HitungJarakFull(kn.getInstanceList().get(0));
 		//System.out.println(kn.HitungJarak(kn.getInstanceList().get(0), kn.getInstanceList().get(2)));
 		

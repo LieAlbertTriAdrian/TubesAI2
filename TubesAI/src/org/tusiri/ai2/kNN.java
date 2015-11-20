@@ -7,8 +7,17 @@ public class kNN {
 
 	private int k;
 	private ArrayList<Instance> InstanceList;
+	private ArrayList<Instance> InstanceListNew;
 	
 	
+	public ArrayList<Instance> getInstanceListNew() {
+		return InstanceListNew;
+	}
+
+	public void setInstanceListNew(ArrayList<Instance> instanceListNew) {
+		InstanceListNew = instanceListNew;
+	}
+
 	public kNN(){
 		InstanceList = new ArrayList<Instance>();
 	}
@@ -75,16 +84,12 @@ public class kNN {
 		for (Instance e : getInstanceList()){
 			if (A.getId() != e.getId()){
 				int ID = e.getId();
-				double Jarak = HitungJarak(A, e);
+				Double Jarak = HitungJarak(A, e);
 				String Label = e.getKelas();
 				distance dst = new distance(ID,Jarak,Label);
-				System.out.println(.getJarak());
 				arrayJarak.add(dst);
 			}
 		}	
-		for (distance e:arrayJarak){
-			System.out.println(e.getJarak());
-		}
 		return arrayJarak;	
 	}
 	
@@ -103,34 +108,99 @@ public class kNN {
 			            iMin = i;
 			        }
 			 }
+			 if(iMin != j) {
+			    	distance tempDistance = new distance();
+			    	tempDistance = arrayJarak.get(j);
+			    	arrayJarak.set(j,arrayJarak.get(iMin));
+			    	arrayJarak.set(iMin,tempDistance);
+			    }
 		}
-	    if(iMin != j) {
-	    	distance tempDistance = new distance();
-	    	tempDistance = arrayJarak.get(j);
-	    	arrayJarak.remove(j);
-	    	arrayJarak.add(j,arrayJarak.get(iMin));
-	    	arrayJarak.remove(iMin);
-	    	arrayJarak.add(iMin,tempDistance);
-	    }
-		
-		
 	}
 	
-	public void FullSet(){
+	public void classifyInstance(Instance I,int indeks,int iAwal, int iAkhir){
+		//Mengubah kelas/label dari Instance menjadi laber Baru hasil KNN
+		
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
-		arrayJarak = HitungJarakFull(InstanceList.get(1));
+		ArrayList<distance> arrayKNearest  = new ArrayList<distance>();
+		ArrayList<distance> arrayJarakFull = new ArrayList<distance>();
+		
+		arrayJarakFull = HitungJarakFull(I);
+
+		
 		for (distance e: arrayJarak){
-			System.out.println(e.getID() + " Jarak :"+e.getJarak());
+			//System.out.println(e.getID() + " Jarak :"+e.getJarak());
 		}
 
 		//SORT arrayJarak berdasar jarak, asscending
 		sortArrayJarak(arrayJarak);
-		for(distance e:arrayJarak){
-			System.out.println(e.getJarak());			
+		for (int i =0; i<k ; i++){
+			arrayKNearest.add(arrayJarak.get(i));
 		}
 
 		
+		//Tampilkan K-nearest label dan ID
+		for (distance e: arrayKNearest){
+			System.out.println("ID: " +e.getID() + "    label   :" +
+		e.getLabel());
+		}
+		
+		//Count number of every class
+		ArrayList<voteCandidate> arrayCandidate= new ArrayList<voteCandidate>();
+		voteCandidate candidateFirst = new voteCandidate(arrayKNearest.get(0).getLabel(), 1);  // inisialisasi candidate 1
+		arrayCandidate.add(candidateFirst);
+		
+		for (int i =1 ; i<arrayKNearest.size();i++){
+			boolean found = false;
+			int j= 0;
+			while (!found && j<arrayCandidate.size()){
+				if(arrayKNearest.get(i).getLabel().equals(arrayCandidate.get(j).getLabel())){
+					found = true;
+					arrayCandidate.get(j).setVote(arrayCandidate.get(j).getVote()+1);
+				}
+				else{
+					j++;
+				}
+			}
+			if(!found){
+				voteCandidate candidateNew = new voteCandidate(arrayKNearest.get(i).getLabel(), 1);
+				arrayCandidate.add(candidateNew);
+			}
+		}
+		
+		
+		//vote for majority
+		voteCandidate Max = arrayCandidate.get(0);
+		for(int i = 1; i < arrayCandidate.size();i++){
+			if(arrayCandidate.get(i).getVote() > Max.getVote()){
+				Max = arrayCandidate.get(i);
+			}
+		}
+		
+		
+		
+		
+		//memasukan Instance dengan label baru ke InstanceListNew
+		Instance newInstance = new Instance(Max.getLabel(),I.getId());
+		for(String e: I.getListAtr()){
+			newInstance.addAtr(e);
+		}
+		
+		InstanceListNew.add(newInstance);
+		
 	}
+	
+	
+	
+	
+	public void fullSet(){
+		/*for (Instance e : InstanceList){
+		InstanceList.	
+		}
+		*/
+	}
+	
+	
+	
 	
 	public void nFold(int fold){
 		
