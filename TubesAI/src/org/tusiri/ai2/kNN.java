@@ -90,8 +90,9 @@ public class kNN {
 				String Label = e.getKelas();
 				distance dst = new distance(ID,Jarak,Label);
 				arrayJarak.add(dst);
+				//System.out.println(e.getId() + "    jarak  " +dst.getJarak());
 			}
-		}	
+		}
 		return arrayJarak;	
 	}
 	
@@ -144,8 +145,7 @@ public class kNN {
 		
 		//Tampilkan K-nearest label dan ID
 		/*for (distance e: arrayKNearest){
-			System.out.println("ID: " +e.getID() + "    label   :" +
-		e.getLabel());
+			System.out.println("ID: " +e.getID() + "    label   :" +		e.getLabel());
 		}*/
 		
 		//Count number of every class
@@ -179,6 +179,7 @@ public class kNN {
 				Max = arrayCandidate.get(i);
 			}
 		}
+		//System.out.println("ID --" +Max.getLabel());
 		
 		//memasukan Instance dengan label baru ke InstanceListNew
 		Instance newInstance = new Instance(Max.getLabel(),I.getId());
