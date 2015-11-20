@@ -119,7 +119,7 @@ public class kNN {
 		}
 	}
 	
-	public void classifyInstance(Instance I,int indeks,int iAwal, int iAkhir){
+	public void classifyInstance(Instance I,int iAwal, int nElement){
 		//Mengubah kelas/label dari Instance menjadi laber Baru hasil KNN
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
 		ArrayList<distance> arrayKNearest  = new ArrayList<distance>();
@@ -131,8 +131,8 @@ public class kNN {
 		}
 		
 		//remove distance for k-fold
-		for(int i = iAwal; i<iAkhir-1; i++){
-			
+		for(int i = 0; i<nElement-1; i++){
+			arrayJarak.remove(iAwal);//seperti queue, indeks akan maju ke depan
 		}
 
 		//SORT arrayJarak berdasar jarak, asscending
@@ -190,12 +190,9 @@ public class kNN {
 		
 	}
 	
-	
-	
-	
 	public void fullSet(){
 		for (Instance e : InstanceList){
-			classifyInstance(e,0,0,-1);
+			classifyInstance(e,0,-1);
 		}
 		for (int i =0;i<InstanceList.size();i++){
 			System.out.println(InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
@@ -203,11 +200,35 @@ public class kNN {
 		
 	}
 	
-	
-	
-	
 	public void nFold(int fold){
-		
+		int nElement = InstanceList.size() /fold;
+		int sisa = InstanceList.size() % fold;
+		//System.out.println(InstanceList.size());
+		//System.out.println(nElement);
+		//System.out.println(InstanceList.size() % fold);
+		int awal = 0;
+		int akhir;
+		if(sisa>0){
+			akhir = nElement+1;
+		}
+		else{
+			akhir = nElement;
+		}
+		for(int i = 0; i< InstanceList.size();i++){
+			classifyInstance(InstanceList.get(i),awal,akhir);
+			if(i==awal){
+				awal = akhir+1;
+				sisa--;
+				if(sisa>0){
+					akhir = nElement+1;
+				}
+				else{
+					akhir = nElement;
+				}
+			}
+		}
+		for (int i =0;i<InstanceList.size();i++){
+			System.out.println(InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
+		}
 	}
-	
 }
