@@ -1,0 +1,564 @@
+high med 4.0 more small med unacc
+low high 3.0 4.0 med low unacc
+med high 2.0 4.0 med low unacc
+high med 3.0 2.0 med low unacc
+high med 4.0 2.0 big high unacc
+med low 3.0 4.0 med med acc
+med vhigh 3.0 more med med acc
+high low 5more 4.0 med high acc
+med vhigh 5more 2.0 small low unacc
+med low 3.0 4.0 big med good
+8
+FOLD ke-0
+start = 0
+1555
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-1
+start = 173
+1555
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-2
+start = 346
+1555
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-3
+start = 519
+1555
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-4
+start = 692
+1555
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-5
+start = 865
+1555
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-6
+start = 1038
+1555
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-7
+start = 1211
+1555
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-8
+start = 1384
+1556
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		FOLD ke-9
+start = 1556
+1556
+[unacc, acc, good, vgood]
+
+
+
+
+buying
+Atribut		unacc		acc		good		vgood		
+high		324		108		0		0		
+low		258		89		46		39		
+med		268		115		23		26		
+vhigh		360		72		0		0		
+
+
+
+maint
+Atribut		unacc		acc		good		vgood		
+med		268		115		23		26		
+high		314		105		0		13		
+low		268		92		46		26		
+vhigh		360		72		0		0		
+
+
+
+doors
+Atribut		unacc		acc		good		vgood		
+4.0		292		102		18		20		
+3.0		300		99		18		15		
+2.0		326		81		15		10		
+5more		292		102		18		20		
+
+
+
+persons
+Atribut		unacc		acc		good		vgood		
+more		322		186		33		35		
+4.0		312		198		36		30		
+2.0		576		0		0		0		
+
+
+
+lug_boot
+Atribut		unacc		acc		good		vgood		
+small		450		105		21		0		
+med		392		135		24		25		
+big		368		144		24		40		
+
+
+
+safety
+Atribut		unacc		acc		good		vgood		
+med		357		180		39		0		
+low		576		0		0		0		
+high		277		204		30		65		=============Summary==========
+Success : 1510(87.38425925925925%)
+Failed : 218(12.61574074074074%)
