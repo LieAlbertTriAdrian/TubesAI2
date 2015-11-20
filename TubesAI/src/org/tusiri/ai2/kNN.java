@@ -192,38 +192,35 @@ public class kNN {
 	
 	public void fullSet(){
 		for (Instance e : InstanceList){
-<<<<<<< HEAD
 			classifyInstance(e,0,-1);
 		}
 		for (int i =0;i<InstanceList.size();i++){
 			System.out.println(InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
-		}
-		
-=======
-			classifyInstance(e,0,0,-1);
 		}		
-		//analisisAkurasi();
->>>>>>> 3fa30c9ec5ad113d9620d077106e2847e15292a3
+		analisisAkurasi();
+
 	}
 	
 	public void nFold(int fold){
 		int nElement = InstanceList.size() /fold;
 		int sisa = InstanceList.size() % fold;
-		//System.out.println(InstanceList.size());
-		//System.out.println(nElement);
-		//System.out.println(InstanceList.size() % fold);
+		System.out.println(InstanceList.size());
+		System.out.println(nElement);
+		System.out.println(InstanceList.size() % fold);
 		int awal = 0;
 		int akhir;
 		if(sisa>0){
 			akhir = nElement+1;
+			sisa--;
 		}
 		else{
 			akhir = nElement;
 		}
 		for(int i = 0; i< InstanceList.size();i++){
 			classifyInstance(InstanceList.get(i),awal,akhir);
-			if(i==awal){
-				awal = akhir+1;
+			if((i%akhir)==0){
+				System.out.println(awal);
+				awal = i+1;
 				sisa--;
 				if(sisa>0){
 					akhir = nElement+1;
@@ -233,21 +230,10 @@ public class kNN {
 				}
 			}
 		}
-		for (int i =0;i<InstanceList.size();i++){
-			System.out.println(InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
-		}
+		analisisAkurasi();
+		
 	}
-<<<<<<< HEAD
-=======
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	public void analisisAkurasi(){
 		int jumlahInstance = InstanceList.size();
@@ -268,18 +254,13 @@ public class kNN {
 		}
 		
 		//Tampilan analisis
-		for (int i =0;i<InstanceList.size();i++){
+		/*for (int i =0;i<InstanceList.size();i++){
 			System.out.println("Kelas Awal: "+InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
-		}
+		}*/
 		
 		System.out.println("Jumlah klasifikasi benar: "+ jumlahBenar);
 		System.out.println("Jumlah klasifikasi salah: " +jumlahSalah);
 		akurasi = jumlahBenar/(double)jumlahInstance*100;
-		System.out.println("Persentase eror: "+ akurasi +"%");
-		
-		
-		
+		System.out.println("Persentase eror: "+ akurasi +"%");	
 	}
-	
->>>>>>> 3fa30c9ec5ad113d9620d077106e2847e15292a3
 }
