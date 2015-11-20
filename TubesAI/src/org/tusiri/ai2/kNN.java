@@ -120,7 +120,7 @@ public class kNN {
 		}
 	}
 	
-	public void classifyInstance(Instance I,int indeks,int iAwal, int iAkhir){
+	public void classifyInstance(Instance I,int iAwal, int nElement){
 		//Mengubah kelas/label dari Instance menjadi laber Baru hasil KNN
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
 		ArrayList<distance> arrayKNearest  = new ArrayList<distance>();
@@ -132,8 +132,8 @@ public class kNN {
 		}
 		
 		//remove distance for k-fold
-		for(int i = iAwal; i<iAkhir-1; i++){
-			
+		for(int i = 0; i<nElement-1; i++){
+			arrayJarak.remove(iAwal);//seperti queue, indeks akan maju ke depan
 		}
 
 		//SORT arrayJarak berdasar jarak, asscending
@@ -191,31 +191,50 @@ public class kNN {
 		
 	}
 	
-	
-	
-	
 	public void fullSet(){
 		for (Instance e : InstanceList){
-			classifyInstance(e,0,0,-1);
+			classifyInstance(e,0,-1);
+		}
+		for (int i =0;i<InstanceList.size();i++){
+			System.out.println(InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
 		}		
 		analisisAkurasi();
+
 	}
-	
-	
-	
 	
 	public void nFold(int fold){
+		int nElement = InstanceList.size() /fold;
+		int sisa = InstanceList.size() % fold;
+		System.out.println(InstanceList.size());
+		System.out.println(nElement);
+		System.out.println(InstanceList.size() % fold);
+		int awal = 0;
+		int akhir;
+		if(sisa>0){
+			akhir = nElement+1;
+			sisa--;
+		}
+		else{
+			akhir = nElement;
+		}
+		for(int i = 0; i< InstanceList.size();i++){
+			classifyInstance(InstanceList.get(i),awal,akhir);
+			if((i%akhir)==0){
+				System.out.println(awal);
+				awal = i+1;
+				sisa--;
+				if(sisa>0){
+					akhir = nElement+1;
+				}
+				else{
+					akhir = nElement;
+				}
+			}
+		}
+		analisisAkurasi();
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	public void analisisAkurasi(){
 		int jumlahInstance = InstanceList.size();
@@ -236,17 +255,13 @@ public class kNN {
 		}
 		
 		//Tampilan analisis
-		for (int i =0;i<InstanceList.size();i++){
+		/*for (int i =0;i<InstanceList.size();i++){
 			System.out.println("Kelas Awal: "+InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
-		}
+		}*/
 		
 		System.out.println("Jumlah klasifikasi benar: "+ jumlahBenar);
 		System.out.println("Jumlah klasifikasi salah: " +jumlahSalah);
 		akurasi = jumlahBenar/(double)jumlahInstance*100;
-		System.out.println("Persentase eror: "+ akurasi +"%");
-		
-		
-		
+		System.out.println("Persentase eror: "+ akurasi +"%");	
 	}
-	
 }

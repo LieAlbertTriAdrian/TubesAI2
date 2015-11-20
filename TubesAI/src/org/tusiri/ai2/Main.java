@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String args[]) throws IOException{
 		//File Wilhelm : C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data
-		//FileInputStream fstream = new FileInputStream("C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data");
+		//FileInputStream fstream = new FileInputStream("C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\dataset\\Weather\\weather.nominal.data");
 		FileInputStream fstream = new FileInputStream("C:\\Users\\Marco Orlando\\Documents\\GitHub\\TubesAI2\\TubesAI\\dataset\\Weather\\weather.nominal.data");
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		String strLine;
@@ -42,7 +42,8 @@ public class Main {
 			
 		kNN kn = new kNN(listCar,4);
 		ArrayList<distance> ar = new ArrayList<distance>();
-		kn.fullSet();
+		//kn.fullSet();
+		kn.nFold(10);
 		//ar = kn.HitungJarakFull(kn.getInstanceList().get(0));
 		//System.out.println(kn.HitungJarak(kn.getInstanceList().get(0), kn.getInstanceList().get(2)));
 		
