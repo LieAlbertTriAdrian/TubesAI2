@@ -36,6 +36,11 @@ public class kNN {
 		return jarak;
 	}
 	
+<<<<<<< HEAD
+	public ArrayList<Integer> HitungJarakFull(Instance A){
+		
+		return null;
+=======
 	public ArrayList<distance> HitungJarakFull(Instance A){
 		//Inisialisasi Array Jarak
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
@@ -51,6 +56,7 @@ public class kNN {
 			}
 		}	
 		return arrayJarak;	
+>>>>>>> 26e2b90c1021b9e776d40442d4495a77d00b840b
 	}
 	
 	

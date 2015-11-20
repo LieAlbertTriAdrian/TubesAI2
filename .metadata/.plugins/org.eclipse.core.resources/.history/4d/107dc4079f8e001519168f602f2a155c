@@ -13,8 +13,7 @@ public class Main {
 	public static final int NATRIBUT = 6;
 
 	public static void main(String args[]) throws IOException{
-		//File Wilhelm : C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data
-		FileInputStream fstream = new FileInputStream("C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data");
+		FileInputStream fstream = new FileInputStream("C:\\Users\\Marco Orlando\\Documents\\GitHub\\TubesAI2\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data");
 		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 		String strLine;
 		ArrayList<Instance> listCar = new ArrayList<Instance>();
