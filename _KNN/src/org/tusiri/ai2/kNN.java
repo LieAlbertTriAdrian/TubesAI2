@@ -6,33 +6,33 @@ import java.util.Collections;
 public class kNN {
 
 	private int k;
-	private ArrayList<Instance> InstanceList;
-	private ArrayList<Instance> InstanceListNew;
+	private ArrayList<Datum> InstanceList;
+	private ArrayList<Datum> InstanceListNew;
 	
 	
-	public ArrayList<Instance> getInstanceListNew() {
+	public ArrayList<Datum> getInstanceListNew() {
 		return InstanceListNew;
 	}
 
-	public void setInstanceListNew(ArrayList<Instance> instanceListNew) {
+	public void setInstanceListNew(ArrayList<Datum> instanceListNew) {
 		InstanceListNew = instanceListNew;
 	}
 
 	public kNN(){
-		InstanceList = new ArrayList<Instance>();
-		InstanceListNew= new ArrayList<Instance>();
+		InstanceList = new ArrayList<Datum>();
+		InstanceListNew= new ArrayList<Datum>();
 	}
 	
-	public kNN(ArrayList<Instance> CList, int _k){
+	public kNN(ArrayList<Datum> CList, int _k){
 		k = _k;
-		InstanceList = new ArrayList<Instance>();
-		for(Instance object: CList){
+		InstanceList = new ArrayList<Datum>();
+		for(Datum object: CList){
 			InstanceList.add(object);
 		};
-		InstanceListNew= new ArrayList<Instance>();
+		InstanceListNew= new ArrayList<Datum>();
 	}
 	
-	public ArrayList<Instance> getInstanceList(){
+	public ArrayList<Datum> getInstanceList(){
 		return InstanceList;
 	};
 	
@@ -40,7 +40,7 @@ public class kNN {
 	
 	public void standardizeTrainingSetNumeric() {
 		Boolean isNumeric = false; // ASUMSI AWAL
-		for (Instance e : getInstanceList()){
+		for (Datum e : getInstanceList()){
 			int numAttributes = e.getListAtr().size();
 			for(int i = 0; i<numAttributes; i++){
 				//Mengidentifikasi apakah nominal atau numeric. Standarkan data jika numeric
@@ -54,7 +54,7 @@ public class kNN {
 	}
 
 	
-	public double HitungJarak(Instance A, Instance B){
+	public double HitungJarak(Datum A, Datum B){
 		int numAttributes = A.getListAtr().size();
 		Boolean isNumeric = false; //ASUMSI AWAL
 		double jarak = 0;
@@ -78,12 +78,12 @@ public class kNN {
 	}
 	
 	
-	public ArrayList<distance> HitungJarakFull(Instance A){
+	public ArrayList<distance> HitungJarakFull(Datum A){
 		//Inisialisasi Array Jarak
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
 		
 		//Hitung Jarak dari Instance A ke Instance lain
-		for (Instance e : getInstanceList()){
+		for (Datum e : getInstanceList()){
 			if (A.getId() != e.getId()){
 				int ID = e.getId();
 				Double Jarak = HitungJarak(A, e);
@@ -120,7 +120,7 @@ public class kNN {
 		}
 	}
 	
-	public void classifyInstance(Instance I,int iAwal, int nElement){
+	public void classifyInstance(Datum I,int iAwal, int nElement){
 		//Mengubah kelas/label dari Instance menjadi laber Baru hasil KNN
 		ArrayList<distance> arrayJarak = new ArrayList<distance>();
 		ArrayList<distance> arrayKNearest  = new ArrayList<distance>();
@@ -184,7 +184,7 @@ public class kNN {
 		//System.out.println("ID --" +Max.getLabel());
 		
 		//memasukan Instance dengan label baru ke InstanceListNew
-		Instance newInstance = new Instance(Max.getLabel(),I.getId());
+		Datum newInstance = new Datum(Max.getLabel(),I.getId());
 		for(String e: I.getListAtr()){
 			newInstance.addAtr(e);
 		}
@@ -194,7 +194,7 @@ public class kNN {
 	}
 	
 	public void fullSet(){
-		for (Instance e : InstanceList){
+		for (Datum e : InstanceList){
 			classifyInstance(e,0,-1);
 		}
 		/*

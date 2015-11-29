@@ -1,25 +1,47 @@
 package org.tusiri.ai2;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NaiveBayes {
 	
-	public static class AtrKelasCount{
+	int nAtribut;
+	ArrayList<String> listAttribute = new ArrayList<String>();
+	
+	public static class AtrKelasCountProb{
 		public String atribut;
 		public String kelas;
 		public int count;
+		public double probability;
 	}
-	
-	private ArrayList<Instance> data;
+
+	public static class KelasCountProb{
+		public String kelas;
+		public int count;
+		public double probability;
+	}
+		
+	private ArrayList<Datum> data;
 	private ArrayList<String> listKelas;
+	private ArrayList<AtrKelasCountProb> listAtrKelasCountProb;
+	private ArrayList<KelasCountProb> listKelasCountProb;	
+	private ArrayList<ArrayList<AtrKelasCountProb>> listAtrKelasCountProbMatrix = new ArrayList<ArrayList<AtrKelasCountProb>>();
 	
-	public NaiveBayes(ArrayList<Instance> data){
-		/*ArrayList<Car> listCar = new ArrayList<Car>(data.size());
-		for (Car car : data){
-			listCar.add(new Car(car));
-		}
-		this.data = listCar;*/
+	public NaiveBayes(ArrayList<Datum> data, int nAtribut,ArrayList<String> listAttribute) throws FileNotFoundException{
 		this.data = data;
+		try {
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("output.txt", true)));
+			out.println("aaaa");
+		} catch (IOException e) {
+		    //exception handling left as an exercise for the reader
+		}
+		this.nAtribut = nAtribut;
+		this.listAttribute = listAttribute;
 	}
 	
 	public ArrayList<String> getListKelas(){
@@ -34,7 +56,8 @@ public class NaiveBayes {
 		return listKelas;
 	}
 	
-	public boolean isValueFound(ArrayList<AtrKelasCount> l, String s){
+	
+	public boolean isValueFoundProb(ArrayList<AtrKelasCountProb> l, String s){
 		boolean found = false;
 			for(int i=0;i<l.size();i++){
 				if(l.get(i).atribut.equals(s)){
@@ -43,9 +66,9 @@ public class NaiveBayes {
 				}
 			}
 		return found;
-	}
+	}	
 	
-	public void addCount(ArrayList<AtrKelasCount> l,String atribut,String kelas){
+	public void addCountProb(ArrayList<AtrKelasCountProb> l,String atribut,String kelas){
 		//Asumsi, elemen l dengan atribut = atribut dan kelas = kelas pasti ada
 		int i=0;
 		boolean notFound = true;
@@ -56,42 +79,164 @@ public class NaiveBayes {
 			}
 			i++;
 		}
-	}
+	}	
 	
-	public void countAppearance(){
-		int nAtribut = Main.NATRIBUT;
-		for(int i=0;i<nAtribut;i++){
+	public void constructProbabilityMatrix(){
+		//System.out.println();
+		int i;
+		for(i=0;i<nAtribut;i++){
 			int x=0;
-			ArrayList<AtrKelasCount> l = new ArrayList<AtrKelasCount>();
+			listAtrKelasCountProb = new ArrayList<AtrKelasCountProb>();
 			for (int j=0;j<data.size();j++){
 				//Jika value atribut belum pernah ditemukan sebelumnya,
 				//Tambahkan ke l, Object AtrKelasCount sebanyak jumlah kelas, dengan nilai count 0
-				if(!(isValueFound(l,data.get(j).getAtr(i)))){
+				if(!(isValueFoundProb(listAtrKelasCountProb,data.get(j).getAtr(i)))){
 					for (int k=0;k<listKelas.size();k++){
-						AtrKelasCount akc = new AtrKelasCount();
+						AtrKelasCountProb akc = new AtrKelasCountProb();
 						akc.atribut = data.get(j).getAtr(i);
 						akc.kelas = listKelas.get(k);
 						akc.count = 0;
-						l.add(akc);
+						akc.probability = 0.0;
+						listAtrKelasCountProb.add(akc);
 					}
 				}
 				//Tambahkan data saat ini
-				addCount(l,data.get(j).getAtr(i),data.get(j).getKelas());
+				addCountProb(listAtrKelasCountProb,data.get(j).getAtr(i),data.get(j).getKelas());
 			}
 			int total=0;
-			for(int m=0;m<l.size();m++){
-				System.out.print(l.get(m).atribut+" ");
-				System.out.print(l.get(m).kelas+" ");
-				System.out.println(l.get(m).count);
-				total += l.get(m).count;
+			
+			
+			System.out.println();System.out.println();
+			System.out.println("\n\n" + listAttribute.get(i));
+			System.out.print("Atribut		");
+			for(int l=0;l<listKelas.size();l++){
+				System.out.print(listKelas.get(l) + "		");
 			}
-			System.out.println(total);
+			
+			
+			//System.out.println("\n" + attribute.get(i) + " Class" + " Count");
+			for(int m=0;m<listAtrKelasCountProb.size();m++){
+				if(m % listKelas.size() == 0){
+					System.out.println();
+					System.out.print(listAtrKelasCountProb.get(m).atribut+"		");
+				}
+				//System.out.print(listAtrKelasCountProb.get(m).kelas+" ");
+				System.out.print(listAtrKelasCountProb.get(m).count+"		");
+				double penyebut = 0;
+				for (int z =0;z< listAtrKelasCountProb.size();z++){
+					if (listAtrKelasCountProb.get(z).kelas.equals(listAtrKelasCountProb.get(m).kelas)){
+						penyebut += listAtrKelasCountProb.get(z).count;
+					}
+				}
+				if (penyebut != 0.0){
+					listAtrKelasCountProb.get(m).probability = listAtrKelasCountProb.get(m).count / penyebut;
+				}
+				else{
+					//System.out.println(penyebut);
+				}
+				total += listAtrKelasCountProb.get(m).count;
+			}
+			listAtrKelasCountProbMatrix.add(listAtrKelasCountProb);
 		}
+		
+	}
+	
+	public void countClassProbAppearance(){
+		listKelasCountProb = new ArrayList<KelasCountProb>();
+
+		for (int k=0;k<listKelas.size();k++){
+			KelasCountProb kcp = new KelasCountProb();
+			kcp.kelas = listKelas.get(k);
+			kcp.count = 0;
+			kcp.probability = 0.0;
+			listKelasCountProb.add(kcp);
+		}
+		
+		for (int j= 0; j < data.size(); j++){
+			for (int k =0; k < listKelasCountProb.size(); k++){
+				if (data.get(j).getKelas().equals(listKelasCountProb.get(k).kelas)){
+					listKelasCountProb.get(k).count++;
+				}
+			}
+		}
+		
+		double penyebut = 0.0;
+		for (int z = 0; z < listKelasCountProb.size(); z++){
+			penyebut += listKelasCountProb.get(z).count;
+		}
+		
+		for (int m=0;m<listKelasCountProb.size();m++){
+			//System.out.print("Kelas : " + listKelasCountProb.get(m).kelas + ", ");
+			//System.out.print("Count : " + listKelasCountProb.get(m).count + ", ");
+			listKelasCountProb.get(m).probability = listKelasCountProb.get(m).count / penyebut;
+			//System.out.println("Probability : " + listKelasCountProb.get(m).probability );
+		}
+		
+	}
+		
+	public String NaiveBayesAnalysis(Datum instance){
+		ArrayList<String> listKelas = getListKelas();
+		ArrayList<Double> values = new ArrayList<Double>();
+		
+		for (int i = 0; i < listKelas.size(); i++){
+				Double value = 0.0;
+				int j = 0;
+				boolean found = false;
+				while (j < listKelas.size() && !found){
+					if (listKelas.get(i).equals(listKelasCountProb.get(j).kelas)){
+						found = true;
+						value += listKelasCountProb.get(j).probability;
+						//System.out.println(value);
+						for (int k = 0 ; k< listAtrKelasCountProbMatrix.size(); k++){	
+							for (int z = 0; z < listAtrKelasCountProbMatrix.get(k).size();z++){
+								/*System.out.print(listAtrKelasCountProbMatrix.get(k).get(z).kelas + " ");
+								System.out.println(listAtrKelasCountProbMatrix.get(k).get(z).atribut);*/
+													
+								if (listKelas.get(i).equals(listAtrKelasCountProbMatrix.get(k).get(z).kelas)
+										&& 
+									instance.getListAtr().get(k).equals(listAtrKelasCountProbMatrix.get(k).get(z).atribut) ){
+										
+										/*System.out.println("Kelas :" + listAtrKelasCountProbMatrix.get(k).get(z).kelas);
+										System.out.println("Atribute :" + listAtrKelasCountProbMatrix.get(k).get(z).atribut);
+										System.out.println("Nilai :" + listAtrKelasCountProbMatrix.get(k).get(z).probability);*/
+										value *= listAtrKelasCountProbMatrix.get(k).get(z).probability;
+								}
+							}
+						}
+					}
+					j++;
+					
+				}
+				values.add(value);
+		}
+		
+		Double maxValue = Collections.max(values);
+		int maxValueIndex = 0;
+		int y = 0;
+		boolean found = false;
+		while (y < values.size() && !found){
+			if (values.get(y) == maxValue){
+				maxValueIndex = y;
+				found = true;
+			}else{
+				y++;	
+			}
+		}
+
+		return listKelas.get(y);
+		
 	}
 	
 	public void process(){
 		ArrayList<String> listKelas = getListKelas();
 		System.out.println(listKelas);
-		countAppearance();
+		//out.println("aa");
+		constructProbabilityMatrix();
+		countClassProbAppearance();
+	}
+	
+	public String getClassResult(Datum instance){
+		String classResult = NaiveBayesAnalysis(instance);
+		return classResult;
 	}
 }

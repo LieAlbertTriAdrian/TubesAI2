@@ -6,48 +6,97 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import weka.core.Instance;
+import weka.core.Instances;
+import weka.core.converters.ArffLoader;
 
 
 public class Main {
-	
-	public static final int NATRIBUT = 6;
-
+		
+	public static int NATRIBUT = 0;
+	public static String HEADER = "";
+	public static ArrayList<String> listAttribute = new ArrayList<String>();
 	public static void main(String args[]) throws IOException{
-		//File Wilhelm : C:\\Users\\Wilhelm\\tubesAI\\TubesAI\\src\\org\\tusiri\\ai2\\zoo.data
-		FileInputStream fstream = new FileInputStream("C:\\Users\\Wilhelm\\tugasBesarAI\\dataset\\CarEvaluation\\car.data");
-		//FileInputStream fstream = new FileInputStream("C:\\Users\\Marco Orlando\\Documents\\GitHub\\TubesAI2\\TubesAI\\dataset\\Weather\\weather.nominal.data");
-		BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-		String strLine;
-		ArrayList<Instance> listCar = new ArrayList<Instance>();
-		int ID = 0;
-		while ((strLine = br.readLine()) != null)   {
-			String[] data = strLine.split(",");
-			
-			Instance car = new Instance(ID);
-			ID++;
-			for(int i=0;i<data.length-1;i++){
-				car.addAtr(data[i]);
-			}
-			car.setKelas(data[data.length-1]);
-			listCar.add(car);
+		String file;
+		
+		//File Path in windows OS
+		//file = "C:\\TubesAI2\\dataset\\CarEvaluation\\car.arff";
+		file = "C:\\Users\\Wilhelm\\tugasBesarAI\\TubesAI\\dataset\\CarEvaluation\\car.arff";
+		
+		//Fila Path in Linux OS
+		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/dataTest/test.data";
+		ArffLoader arffloader=new ArffLoader();
+		
+		File filedata = new File(file);
+		arffloader.setFile(filedata);
+
+		Instances data = arffloader.getDataSet();
+		NATRIBUT = data.numAttributes()-1;
+		
+		for (int k = 0; k< NATRIBUT; k++){
+			String dataAttribute = data.attribute(k).toString();
+			String[] s = dataAttribute.split(" ");
+			listAttribute.add(s[1]);
+			HEADER += (s[1] + " ");
 		}
-		br.close();
+
+		//Initiate list of Datum
+		ArrayList<Datum> listDatum = new ArrayList<Datum>();
+		
+		//Get data from arff file.
+		//System.out.println("NATRIBUT = " + NATRIBUT);
+		for(int i = 0; i < data.numInstances();i++){
+			Instance instance = data.instance(i);
+		    //System.out.println("Instance:" + instance.stringValue(0));
+		    
+		    Datum datum = new Datum(i);
+		    for(int j=0;j<NATRIBUT;j++){
+				datum.addAtr(instance.stringValue(j));
+			}
+		    datum.setKelas(instance.stringValue(NATRIBUT));
+		    listDatum.add(datum);
+		 }
+		
+		
+		//Naive Bayes Analysis
+		NaiveBayes nb = new NaiveBayes(listDatum,NATRIBUT,listAttribute);
+		nb.process();
+		/*
+		kNN kn = new kNN(listDatum,3);
+		kn.nFold(10);
+		*/
+		
 		
 		/*
-		//Analysis Naive Bayes
-		NaiveBayes nb = new NaiveBayes(listCar);
-		nb.process();*/
+		int success = 0;
+		int failed = 0;
+		for(int k=0;k<listDatum.size();k++){
+			Datum instance = listDatum.get(k);
+			//System.out.print("Instance : ");
+			//instance.printDatum();
+			//System.out.print("Naive Bayes Result : ");
+			String result = nb.getClassResult(instance);
+			//System.out.println(result);
+			//System.out.print("Status : ");
+			if (result.equals(instance.getKelas())){
+				success++;
+				//System.out.println("Success");
+			}
+			else{
+				failed++;
+				//System.out.println("failed");
+			}
+		}
 		
-		//Analisis KNN
-			
+		System.out.println("\n=============Summary==========");
+		double totalInstances = success + failed;
+		System.out.println("Success : " + success + "("+success /totalInstances * 100 +"%)");
+		System.out.println("Failed : " + failed + "("+failed / totalInstances * 100 +"%)");
 		
-		kNN kn = new kNN(listCar,3);
-		ArrayList<distance> ar = new ArrayList<distance>();
-		kn.fullSet();
-		//kn.nFold(10);
-		//ar = kn.HitungJarakFull(kn.getInstanceList().get(0));
-		//System.out.println(kn.HitungJarak(kn.getInstanceList().get(0), kn.getInstanceList().get(2)));
-		
+	*/
 	}
 	
 }

@@ -2,17 +2,17 @@ package org.tusiri.ai2;
 
 import java.util.ArrayList;
 
-public class Instance {
+public class Datum {
 	private String kelas;
 	private int ID;
 	private ArrayList<String> atr;
 	
-	public Instance(int i){
+	public Datum(int i){
 		atr = new ArrayList<String>();
 		ID = i;
 	}
 	
-	public Instance(String car, int i){
+	public Datum(String car, int i){
 		kelas = car;
 		atr = new ArrayList<String>();
 		ID = i;
