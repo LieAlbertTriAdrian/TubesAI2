@@ -1,2 +1,0 @@
-INDEX VERSION 1.128+C:\Users\Wilhelm\tubesAI\.metadata\.plugins\org.eclipse.jdt.core
-3019971155.index

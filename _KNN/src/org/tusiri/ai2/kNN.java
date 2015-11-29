@@ -133,7 +133,9 @@ public class kNN {
 		
 		//remove distance for k-fold
 		for(int i = 0; i<nElement-1; i++){
-			arrayJarak.remove(iAwal);//seperti queue, indeks akan maju ke depan
+			if(iAwal<arrayJarak.size()){
+				arrayJarak.remove(iAwal);//seperti queue, indeks akan maju ke depan
+			}
 		}
 
 		//SORT arrayJarak berdasar jarak, asscending
@@ -179,7 +181,7 @@ public class kNN {
 				Max = arrayCandidate.get(i);
 			}
 		}
-		//System.out.println("Label sebelumnya "+I.getKelas()+" ID --" +Max.getLabel());
+		//System.out.println("ID --" +Max.getLabel());
 		
 		//memasukan Instance dengan label baru ke InstanceListNew
 		Instance newInstance = new Instance(Max.getLabel(),I.getId());
@@ -195,6 +197,10 @@ public class kNN {
 		for (Instance e : InstanceList){
 			classifyInstance(e,0,-1);
 		}
+		/*
+		for (int i =0;i<InstanceList.size();i++){
+			System.out.println(InstanceList.get(i).getKelas() + " menjadi   -->" + InstanceListNew.get(i).getKelas());
+		}*/		
 		analisisAkurasi();
 
 	}
@@ -202,9 +208,9 @@ public class kNN {
 	public void nFold(int fold){
 		int nElement = InstanceList.size() /fold;
 		int sisa = InstanceList.size() % fold;
-		System.out.println(InstanceList.size());
+		/*System.out.println(InstanceList.size());
 		System.out.println(nElement);
-		System.out.println(InstanceList.size() % fold);
+		System.out.println(InstanceList.size() % fold);*/
 		int awal = 0;
 		int akhir;
 		if(sisa>0){
@@ -217,7 +223,6 @@ public class kNN {
 		for(int i = 0; i< InstanceList.size();i++){
 			classifyInstance(InstanceList.get(i),awal,akhir);
 			if((i%akhir)==0){
-				System.out.println(awal);
 				awal = i+1;
 				sisa--;
 				if(sisa>0){
