@@ -7,12 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class NaiveBayes {
-	
-	int nAtribut;
-	ArrayList<String> listAttribute = new ArrayList<String>();
-	
+
 	public static class AtrKelasCountProb{
 		public String atribut;
 		public String kelas;
@@ -25,14 +24,142 @@ public class NaiveBayes {
 		public int count;
 		public double probability;
 	}
-		
+	
+	public static class KelasMean{
+		public String kelas;
+		public double mean;
+	}
+	
+	public static class KelasStdDev{
+		public String kelas;
+		public double stdDev;
+	}
+	
+	private int nAtribut;
+	private ArrayList<String> listAttribute = new ArrayList<String>();
+	private ArrayList<Boolean> listAttributeNumeric = new ArrayList<Boolean>();
+	private ArrayList<ArrayList<KelasMean>> listMean = new ArrayList<ArrayList<KelasMean>>();//MENYIMPAN MEAN
+	private ArrayList<ArrayList<KelasStdDev>> listStdDev = new ArrayList<ArrayList<KelasStdDev>>();//MENYIMPAN STD DEV
+	
 	private ArrayList<Datum> data;
 	private ArrayList<String> listKelas;
+	
+	private int success;
+	private int failed; 
+	
 	private ArrayList<AtrKelasCountProb> listAtrKelasCountProb;
 	private ArrayList<KelasCountProb> listKelasCountProb;	
 	private ArrayList<ArrayList<AtrKelasCountProb>> listAtrKelasCountProbMatrix = new ArrayList<ArrayList<AtrKelasCountProb>>();
+
 	
-	public NaiveBayes(ArrayList<Datum> data, int nAtribut,ArrayList<String> listAttribute) throws FileNotFoundException{
+	static void shuffleArray(ArrayList<Datum> al){
+	    // If running on Java 6 or older, use `new Random()` on RHS here
+	    Random rnd = ThreadLocalRandom.current();
+	    for (int i = al.size() - 1; i > 0; i--){
+	    	int index = rnd.nextInt(i + 1);
+	    	//Simple swap
+	    	Datum instance = al.get(index);
+	    	al.set(index,al.get(i));
+	    	al.set(i,instance);
+	    }
+	}
+	
+	private void countMean(){
+		for(int i=0; i<nAtribut; i++){
+			if(listAttributeNumeric.get(i)){
+				ArrayList<KelasMean> listKelasMean = new ArrayList<KelasMean>();
+				for(int j=0; j<listKelas.size(); j++){
+					
+					double sum=0;
+					double count=0;
+					for(int k=0; k<data.size(); k++){
+						if((data.get(k).getKelas().equals(listKelas.get(j)))){
+							sum += Double.parseDouble(data.get(k).getAtr(i));
+							count += 1;
+						}
+					}
+					
+					sum /= count;
+					//System.out.println("sum = " + sum);
+					KelasMean km = new KelasMean();
+					km.kelas = listKelas.get(j);
+					km.mean = sum;
+					listKelasMean.add(km);
+				}
+				listMean.add(listKelasMean);
+			} else {
+				listMean.add(null);
+			}
+		}
+	}
+	
+	private double getMean(int atr, String kelas){
+		
+		ArrayList<KelasMean> listKelasMean = listMean.get(atr);
+		boolean found = false;
+		int i = 0;
+		double mean = 0;
+		while(!found){
+			if(listKelasMean.get(i).kelas.equals(kelas)){
+				found = true;
+				mean = listKelasMean.get(i).mean;
+				break;
+			}
+			i++;
+		}
+		return mean;
+	}
+	
+	private void countStdDev(){
+		for(int i=0; i<nAtribut; i++){
+			if(listAttributeNumeric.get(i)){
+				ArrayList<KelasStdDev> listKelasStdDev = new ArrayList<KelasStdDev>();
+				for(int j=0; j<listKelas.size(); j++){
+					double sum=0;
+					double count=0;
+					double mean = getMean(i,listKelas.get(j));
+					for(int k=0; k<data.size(); k++){
+						if((data.get(k).getKelas().equals(listKelas.get(j)))){
+							sum += Math.pow(Double.parseDouble(data.get(k).getAtr(i))-mean, 2);
+							count += 1;
+						}
+					}
+					double x = count-1;
+					sum /= x;
+					KelasStdDev ks = new KelasStdDev();
+					ks.kelas = listKelas.get(j);
+					ks.stdDev = sum;
+					System.out.println("std dev " + ks.stdDev);
+					listKelasStdDev.add(ks);
+				}
+				listStdDev.add(listKelasStdDev);
+			} else {
+				listStdDev.add(null);
+			}
+			
+		}
+	}
+	
+	private double getStdDev(int atr, String kelas){
+		ArrayList<KelasStdDev> listKelasStdDev = listStdDev.get(atr);
+		boolean found = false;
+		int i = 0;
+		double stdDev = 0;
+		while(!found){
+			if(listKelasStdDev.get(i).kelas.equals(kelas)){
+				found = true;
+				stdDev = listKelasStdDev.get(i).stdDev;
+				break;
+			}
+			i++;
+		}
+		return stdDev;
+	}
+	
+	public int getSuccess(){return success;}
+	public int getFailed(){return failed;}
+		
+	public NaiveBayes(ArrayList<Datum> data, int nAtribut,ArrayList<String> listAttribute,ArrayList<Boolean> listAttributeNumeric) throws FileNotFoundException{
 		this.data = data;
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("output.txt", true)));
@@ -42,6 +169,7 @@ public class NaiveBayes {
 		}
 		this.nAtribut = nAtribut;
 		this.listAttribute = listAttribute;
+		this.listAttributeNumeric = listAttributeNumeric;
 	}
 	
 	public ArrayList<String> getListKelas(){
@@ -82,7 +210,6 @@ public class NaiveBayes {
 	}	
 	
 	public void constructProbabilityMatrix(){
-		//System.out.println();
 		int i;
 		for(i=0;i<nAtribut;i++){
 			int x=0;
@@ -105,20 +232,23 @@ public class NaiveBayes {
 			}
 			int total=0;
 			
-			
+			/* JANGAN DIHAPUS
 			System.out.println();System.out.println();
 			System.out.println("\n\n" + listAttribute.get(i));
 			System.out.print("Atribut		");
 			for(int l=0;l<listKelas.size();l++){
 				System.out.print(listKelas.get(l) + "		");
 			}
+			*/
 			
 			
 			//System.out.println("\n" + attribute.get(i) + " Class" + " Count");
 			for(int m=0;m<listAtrKelasCountProb.size();m++){
 				if(m % listKelas.size() == 0){
+					/* JANGAN DIHAPUS
 					System.out.println();
 					System.out.print(listAtrKelasCountProb.get(m).atribut+"		");
+					*/
 				}
 				//System.out.print(listAtrKelasCountProb.get(m).kelas+" ");
 				System.out.print(listAtrKelasCountProb.get(m).count+"		");
@@ -129,6 +259,7 @@ public class NaiveBayes {
 					}
 				}
 				if (penyebut != 0.0){
+					//Ubah di sini, kalo atribut numerik
 					listAtrKelasCountProb.get(m).probability = listAtrKelasCountProb.get(m).count / penyebut;
 				}
 				else{
@@ -187,7 +318,7 @@ public class NaiveBayes {
 						found = true;
 						value += listKelasCountProb.get(j).probability;
 						//System.out.println(value);
-						for (int k = 0 ; k< listAtrKelasCountProbMatrix.size(); k++){	
+						for (int k = 0 ; k< listAtrKelasCountProbMatrix.size(); k++){//jumlah atribut
 							for (int z = 0; z < listAtrKelasCountProbMatrix.get(k).size();z++){
 								/*System.out.print(listAtrKelasCountProbMatrix.get(k).get(z).kelas + " ");
 								System.out.println(listAtrKelasCountProbMatrix.get(k).get(z).atribut);*/
@@ -195,11 +326,13 @@ public class NaiveBayes {
 								if (listKelas.get(i).equals(listAtrKelasCountProbMatrix.get(k).get(z).kelas)
 										&& 
 									instance.getListAtr().get(k).equals(listAtrKelasCountProbMatrix.get(k).get(z).atribut) ){
-										
-										/*System.out.println("Kelas :" + listAtrKelasCountProbMatrix.get(k).get(z).kelas);
-										System.out.println("Atribute :" + listAtrKelasCountProbMatrix.get(k).get(z).atribut);
-										System.out.println("Nilai :" + listAtrKelasCountProbMatrix.get(k).get(z).probability);*/
+									//if(!listAttributeNumeric.get(k))
 										value *= listAtrKelasCountProbMatrix.get(k).get(z).probability;
+									//else{
+										//double pangkat = - (Math.pow((Double.parseDouble(instance.getListAtr().get(k)) - getStdDev(k,listKelas.get(i))),2) /  (2 * Math.pow(getStdDev(k,listKelas.get(i)),2)));
+										//System.out.println("pangkat = " + pangkat);
+										//value *= (1/((Math.sqrt(2*Math.PI))*getStdDev(k,listKelas.get(i)))) * (Math.pow(2.718,pangkat));
+									//}
 								}
 							}
 						}
@@ -227,12 +360,85 @@ public class NaiveBayes {
 		
 	}
 	
-	public void process(){
+	public void process(boolean needCheck){
 		ArrayList<String> listKelas = getListKelas();
 		System.out.println(listKelas);
-		//out.println("aa");
 		constructProbabilityMatrix();
 		countClassProbAppearance();
+		countMean();
+		countStdDev();
+		if(needCheck){
+			for(int k=0;k<data.size();k++){
+				Datum instance = data.get(k);
+				String result = getClassResult(instance);
+				if (result.equals(instance.getKelas())){success++;}
+				else{failed++;}
+			}
+			printResult();
+		}
+	}
+	
+	public void process10Fold() throws FileNotFoundException{
+		final int NFOLD = 10;
+		shuffleArray(data);
+		int dataSize = data.size();
+		int dataPerFold = dataSize/NFOLD;
+		int sisa = dataSize % NFOLD;
+		System.out.println(sisa);
+		int dataPerFoldLebih = dataPerFold + 1;//Jika bukan kelipatan 10
+		for(int i=0;i<NFOLD;i++){
+			System.out.println("FOLD ke-" + i);
+			int count = 0;
+			ArrayList<Datum> listTest = new ArrayList<Datum>();
+			ArrayList<Datum> listTraining = new ArrayList<Datum>();
+			int start = 0;
+			for(int k=0;k<i;k++){
+				if(k<sisa){
+					start +=dataPerFoldLebih; 
+				} else {
+					start += dataPerFold;
+				}
+			}
+			System.out.println("start = " + start);
+			
+			int jumlahData = 0;
+			if(i<sisa){
+				jumlahData = dataPerFoldLebih;
+			} else {
+				jumlahData = dataPerFold;
+			}
+			
+			for(int j=0;j<dataSize;j++){
+				if(j>=start && j<start+jumlahData){
+					//Masukkan ke data test
+					listTest.add(data.get(j));
+				} else {
+					//Masukkan ke data training
+					listTraining.add(data.get(j));
+				}
+				
+			}
+			System.out.println(listTraining.size());
+			NaiveBayes nb = new NaiveBayes(listTraining,nAtribut,listAttribute,listAttributeNumeric);
+			nb.process(false);
+			
+			for(int k=0;k<listTest.size();k++){
+				Datum instance = listTest.get(k);
+				String result = nb.getClassResult(instance);
+				if (result.equals(instance.getKelas())){success++;}
+				else{failed++;}
+			}
+			listTest.clear();	
+			listTraining.clear();
+		}
+		printResult();
+	}
+	
+	public void printResult(){
+		System.out.println("\n=============Summary==========");
+		System.out.println("success = " + success);
+		System.out.println("failed = " + failed);
+		System.out.println("totalInstances = " + data.size());
 	}
 	
 	public String getClassResult(Datum instance){
