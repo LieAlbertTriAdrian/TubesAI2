@@ -8,7 +8,8 @@ public class kNN {
 	private int k;
 	private ArrayList<Datum> InstanceList;
 	private ArrayList<Datum> InstanceListNew;
-	
+	private ArrayList<String> listAttribute = new ArrayList<String>();
+	private ArrayList<Boolean> listAttributeNumeric = new ArrayList<Boolean>();
 	
 	public ArrayList<Datum> getInstanceListNew() {
 		return InstanceListNew;
@@ -23,13 +24,22 @@ public class kNN {
 		InstanceListNew= new ArrayList<Datum>();
 	}
 	
-	public kNN(ArrayList<Datum> CList, int _k){
+	public kNN(ArrayList<Datum> CList,ArrayList<String> Atr,ArrayList<Boolean> isNum, int _k){
 		k = _k;
 		InstanceList = new ArrayList<Datum>();
 		for(Datum object: CList){
 			InstanceList.add(object);
 		};
+		for(String object: Atr){
+			listAttribute.add(object);
+		};
+		for(Boolean object: isNum){
+			listAttributeNumeric.add(object);
+		};
+		standardizeNumericAttribut();
+		
 		InstanceListNew= new ArrayList<Datum>();
+		
 	}
 	
 	public ArrayList<Datum> getInstanceList(){
@@ -38,17 +48,32 @@ public class kNN {
 	
 	
 	
-	public void standardizeTrainingSetNumeric() {
-		Boolean isNumeric = false; // ASUMSI AWAL
-		for (Datum e : getInstanceList()){
-			int numAttributes = e.getListAtr().size();
-			for(int i = 0; i<numAttributes; i++){
-				//Mengidentifikasi apakah nominal atau numeric. Standarkan data jika numeric
-				if (!isNumeric){ //nominal data
-					//DO Nothing
-				} else{ //numeric data, nilai harus distandardkan
-					//Later
+	
+	public void standardizeNumericAttribut(){
+		//standardize numeric value
+		int numOfAttribut = listAttribute.size();
+		for (int i=0; i<numOfAttribut;i++){
+			if(listAttributeNumeric.get(i)){//adalah attribut numerik
+				//mencari nilai max dan min dari attribut i
+				Double max = Double.parseDouble(InstanceList.get(0).getAtr(i));
+				Double min = Double.parseDouble(InstanceList.get(0).getAtr(i));
+				for( Datum e : InstanceList){
+					if(Double.parseDouble(e.getAtr(i)) >max){
+						max = Double.parseDouble(e.getAtr(i));
+					} else if (Double.parseDouble(e.getAtr(i)) < min){
+						min = Double.parseDouble(e.getAtr(i));
+					}
+				}	
+					
+				
+				//mengubah nilai dari tiap datum untuk attribut i
+				for (Datum e: InstanceList){
+					//ubah nilai
+					Double xAwal = Double.parseDouble(e.getAtr(i));
+					Double xAkhir = (xAwal-min)/(max-min);
+					e.getListAtr().set(i, xAkhir.toString());							
 				}
+
 			}
 		}
 	}
@@ -56,10 +81,10 @@ public class kNN {
 	
 	public double HitungJarak(Datum A, Datum B){
 		int numAttributes = A.getListAtr().size();
-		Boolean isNumeric = false; //ASUMSI AWAL
 		double jarak = 0;
 		for(int i = 0; i<numAttributes; i++){
-			
+			Boolean isNumeric = listAttributeNumeric.get(i);
+			//Boolean isNumeric = false;
 			//Mengidentifikasi apakah nominal atau numeric. GUnakan eucledian untuk numeric data.
 			if (!isNumeric){ //nominal data
 				if(!A.getAtr(i).equals(B.getAtr(i))){
@@ -263,7 +288,7 @@ public class kNN {
 		
 		System.out.println("Jumlah klasifikasi benar: "+ jumlahBenar);
 		System.out.println("Jumlah klasifikasi salah: " +jumlahSalah);
-		akurasi = jumlahBenar/(double)jumlahInstance*100;
+		akurasi = (jumlahSalah/(double)jumlahInstance)*100;
 		System.out.println("Persentase eror: "+ akurasi +"%");	
 	}
 }

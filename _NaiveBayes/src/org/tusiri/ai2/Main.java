@@ -23,7 +23,8 @@ public class Main {
 		System.setOut(new PrintStream(f));
 		   
 		//File Path in windows OS
-		file = "C:\\TubesAI2\\dataset\\CarEvaluation\\car.arff";
+		//file = "C:\\TubesAI2\\dataset\\CarEvaluation\\car.arff";
+		file = "F:\\KULIAH\\SEMESTER 5\\IF3170 Inteligensi Buatan\\TubesAI2\\dataset\\CarEvaluation\\car.arff";
 		
 		//Fila Path in Linux OS
 		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/dataTest/test.data";

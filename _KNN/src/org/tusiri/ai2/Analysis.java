@@ -44,6 +44,32 @@ public class Analysis {
 	    }
 	}
 	
+	
+	
+	public void standardizeNumericAttr() {
+		
+		int numberOfAttr = listAttribute.size();
+		for (int i = 0 ; i < numberOfAttr; i++){
+			
+			
+		}
+		
+		
+		
+		/*Boolean isNumeric = false; // ASUMSI AWAL
+		for (Datum e : getInstanceList()){
+			int numAttributes = e.getListAtr().size();
+			for(int i = 0; i<numAttributes; i++){
+				//Mengidentifikasi apakah nominal atau numeric. Standarkan data jika numeric
+				if (!isNumeric){ //nominal data
+					//DO Nothing
+				} else{ //numeric data, nilai harus distandardkan
+					//Later
+				}
+			}
+		}*/
+	}
+	
 	public void analyze(){
 		
 		ArffLoader arffloader=new ArffLoader();
@@ -59,7 +85,7 @@ public class Analysis {
 		try {
 			data = arffloader.getDataSet();
 			NATRIBUT = data.numAttributes()-1;
-			System.out.println("NATRIBUT = " + data.numAttributes());
+			//System.out.println("NATRIBUT = " + data.numAttributes());
 			for (int k = 0; k< NATRIBUT; k++){
 				String dataAttribute = data.attribute(k).toString();
 				Boolean isNumeric = data.attribute(k).isNumeric();
@@ -85,11 +111,13 @@ public class Analysis {
 						datum.addAtr(instance.stringValue(j));
 					}
 				}
+				//System.out.println("NATRIBUT = " + NATRIBUT);
 				datum.setKelas(instance.stringValue(NATRIBUT));
 				listDatum.add(datum);
-			}
-		
-		
+			}	
+			
+						
+			
 			//Naive Bayes Analysis
 		
 		if(type.equals("NaiveBayes")){
@@ -101,7 +129,7 @@ public class Analysis {
 			}
 			
 		} else {//knn
-			kNN knn = new kNN(listDatum,3);
+			kNN knn = new kNN(listDatum,listAttribute,listAttributeNumeric,Main.knumber);
 			if(training.equals("FullTraining")){
 				knn.fullSet();
 			} else {//10 Fold

@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
 public class Main {
@@ -24,12 +25,13 @@ public class Main {
 	static String type = "NaiveBayes";
 	static String training = "FullTraining";
 	static File selectedFile = null;
-
+	static int knumber = 1;
 	public static void main(String args[]) throws IOException{
+		final CustomDialog customDialog;
 		
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JDialog.setDefaultLookAndFeelDecorated(true);
-		JFrame frame = new JFrame("Tubes AI");
+		final JFrame frame = new JFrame("Tubes AI");
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JButton buttonSelect = new JButton("Select File");
@@ -82,7 +84,7 @@ public class Main {
 	      
 	    buttonSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				JFileChooser fileChooser = new JFileChooser("C:\\TubesAI2\\dataset\\CarEvaluation");//biar ga lama cari2 folder
+				JFileChooser fileChooser = new JFileChooser("F:\\KULIAH\\SEMESTER 5\\IF3170 Inteligensi Buatan\\TubesAI2\\dataset\\CarEvaluation");//biar ga lama cari2 folder
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					selectedFile = fileChooser.getSelectedFile();
@@ -90,29 +92,64 @@ public class Main {
 				}
 			}
 	    });
+	    customDialog = new CustomDialog(frame, "tusiri");
+        customDialog.pack();
 	    buttonAnalyze.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent ae) {
+	    		String s;
 	    		if(selectedFile != null){
+	    			if (type.equals("KNN"))
+	    			{
+	    	        	customDialog.setLocationRelativeTo(frame);
+	    	            customDialog.setVisible(true);
+	    	            s = customDialog.getValidatedText();
+	    	            knumber = Integer.parseInt(s);
+	    			}
 	    			textArea.setText("");
 	    			Analysis a = new Analysis(type,training,selectedFile);
-					a.analyze();
-					result.setText("<html>Success : " + a.getSuccess() + "("+a.getSuccess() /a.getTotalInstances() * 100 +"%)<br>" +
-							"Failed : " + a.getFailed() + "("+a.getFailed() / a.getTotalInstances() * 100 +"%)</html>" );
-				      
+					a.analyze();  
 					System.out.println(selectedFile.getName());
 	    		}
 	    	}
 	    });
+	    
+	    //Setting interface for filePath
+	    filePath.setFont(new Font("Candara", Font.PLAIN, 14));
+	    filePath.setFont(filePath.getFont().deriveFont(filePath.getFont().getStyle() | Font.BOLD));
+	    filePath.setForeground(Color.WHITE);
+	    
+	    nbButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+	    nbButton.setForeground(Color.WHITE);
+	    nbButton.setBackground(new Color(94,100,114));
+	    
+	    knnButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+	    knnButton.setForeground(Color.WHITE);
+	    knnButton.setBackground(new Color(94,100,114));
+	    
+	    ftButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+	    ftButton.setForeground(Color.WHITE);
+	    ftButton.setBackground(new Color(94,100,114));
+	    
+	    tenFoldButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 13));
+	    tenFoldButton.setForeground(Color.WHITE);
+	    tenFoldButton.setBackground(new Color(94,100,114));
+	    
+	    frame.getContentPane().setBackground(new Color(94,100,114));
 		
-		frame.add( scroll );
+	    frame.add( scroll );
 		MessageConsole mc = new MessageConsole(textArea);
+		
 		mc.redirectOut();
 		mc.redirectErr(Color.RED, null);
-		mc.setMessageLines(100);
-		
-		buttonSelect.setBackground(Color.BLACK);
+		mc.setMessageLines(300);
+			
+		buttonSelect.setBackground(new Color(39,35,58));
 		buttonSelect.setForeground(Color.WHITE);
-		buttonSelect.setFont(new Font("Arial", Font.PLAIN, 12));
+		buttonSelect.setFont(new Font("Dotum", Font.PLAIN, 14));
+		
+		buttonAnalyze.setBackground(new Color(21,39,35));
+		buttonAnalyze.setForeground(Color.WHITE);
+		buttonAnalyze.setFont(new Font("Dotum", Font.PLAIN, 14));
 		
 		frame.setResizable(false);
 	    frame.add(buttonSelect);
@@ -143,7 +180,7 @@ public class Main {
 	    ftButton.setBounds(170,100,100,30);
 	    tenFoldButton.setBounds(170,130,100,30);
 	    
-	    scroll.setBounds(30,250,430,200);
+	    scroll.setBounds(25,180,440,270);
 	    frame.add(new JButton("Button 1"));
 	    frame.add(new JButton("Button 2"));
 	    frame.pack();
