@@ -1,102 +1,153 @@
 package org.tusiri.ai2;
-import java.io.BufferedReader;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
-import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.converters.ArffLoader;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 
 public class Main {
 		
-	public static int NATRIBUT = 0;
-	public static String HEADER = "";
-	public static ArrayList<String> listAttribute = new ArrayList<String>();
+	static String type = "NaiveBayes";
+	static String training = "FullTraining";
+	static File selectedFile = null;
+
 	public static void main(String args[]) throws IOException{
-		String file;
 		
-		//File Path in windows OS
-		//file = "C:\\TubesAI2\\dataset\\CarEvaluation\\car.arff";
-		file = "C:\\Users\\Wilhelm\\tugasBesarAI\\TubesAI\\dataset\\CarEvaluation\\car.arff";
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		JDialog.setDefaultLookAndFeelDecorated(true);
+		JFrame frame = new JFrame("Tubes AI");
+		frame.setLayout(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JButton buttonSelect = new JButton("Select File");
+		final JLabel filePath = new JLabel("", JLabel.LEFT);
+		JButton buttonAnalyze = new JButton("Analyze");
+		JLabel typeGroupLabel = new JLabel("Type", JLabel.CENTER);    
+		final JLabel result = new JLabel("", JLabel.CENTER);      
+		final JTextArea textArea = new JTextArea();
+		JScrollPane scroll = new JScrollPane( textArea );
 		
-		//Fila Path in Linux OS
-		//file = "/home/alberttriadrian/Documents/Albert/TubesIF/Ai2/dataset/dataTest/test.data";
-		ArffLoader arffloader=new ArffLoader();
 		
-		File filedata = new File(file);
-		arffloader.setFile(filedata);
+		final JRadioButton nbButton = new JRadioButton("Naive Bayes", true);
+	    final JRadioButton knnButton = new JRadioButton("KNN");
+	    
+	    ButtonGroup typeGroup = new ButtonGroup();
+	    typeGroup.add(nbButton);
+	    typeGroup.add(knnButton);
+	    
+	    final JRadioButton ftButton = new JRadioButton("Full Training", true);
+	    final JRadioButton tenFoldButton = new JRadioButton("10-Fold");
 
-		Instances data = arffloader.getDataSet();
-		NATRIBUT = data.numAttributes()-1;
-		
-		for (int k = 0; k< NATRIBUT; k++){
-			String dataAttribute = data.attribute(k).toString();
-			String[] s = dataAttribute.split(" ");
-			listAttribute.add(s[1]);
-			HEADER += (s[1] + " ");
-		}
-
-		//Initiate list of Datum
-		ArrayList<Datum> listDatum = new ArrayList<Datum>();
-		
-		//Get data from arff file.
-		//System.out.println("NATRIBUT = " + NATRIBUT);
-		for(int i = 0; i < data.numInstances();i++){
-			Instance instance = data.instance(i);
-		    //System.out.println("Instance:" + instance.stringValue(0));
-		    
-		    Datum datum = new Datum(i);
-		    for(int j=0;j<NATRIBUT;j++){
-				datum.addAtr(instance.stringValue(j));
+	    ButtonGroup trainingGroup = new ButtonGroup();
+	    trainingGroup.add(ftButton);
+	    trainingGroup.add(tenFoldButton);
+	    
+	    nbButton.addItemListener(new ItemListener() {
+	         public void itemStateChanged(ItemEvent e) {         
+	        	 type = "NaiveBayes";
+	         }           
+	      });
+	    
+	    knnButton.addItemListener(new ItemListener() {
+	         public void itemStateChanged(ItemEvent e) {         
+	        	 type = "KNN";
+	         }           
+	      });
+	    
+	    
+	    ftButton.addItemListener(new ItemListener() {
+	         public void itemStateChanged(ItemEvent e) {         
+	        	 training = "FullTraining";
+	         }           
+	      });
+	    
+	    tenFoldButton.addItemListener(new ItemListener() {
+	         public void itemStateChanged(ItemEvent e) {         
+	        	 training = "tenFold";
+	         }           
+	      });
+	      
+	    buttonSelect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				JFileChooser fileChooser = new JFileChooser("C:\\TubesAI2\\dataset\\CarEvaluation");//biar ga lama cari2 folder
+				int returnValue = fileChooser.showOpenDialog(null);
+				if (returnValue == JFileChooser.APPROVE_OPTION) {
+					selectedFile = fileChooser.getSelectedFile();
+					filePath.setText(fileChooser.getSelectedFile().getAbsolutePath());
+				}
 			}
-		    datum.setKelas(instance.stringValue(NATRIBUT));
-		    listDatum.add(datum);
-		 }
+	    });
+	    buttonAnalyze.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent ae) {
+	    		if(selectedFile != null){
+	    			textArea.setText("");
+	    			Analysis a = new Analysis(type,training,selectedFile);
+					a.analyze();
+					result.setText("<html>Success : " + a.getSuccess() + "("+a.getSuccess() /a.getTotalInstances() * 100 +"%)<br>" +
+							"Failed : " + a.getFailed() + "("+a.getFailed() / a.getTotalInstances() * 100 +"%)</html>" );
+				      
+					System.out.println(selectedFile.getName());
+	    		}
+	    	}
+	    });
 		
+		frame.add( scroll );
+		MessageConsole mc = new MessageConsole(textArea);
+		mc.redirectOut();
+		mc.redirectErr(Color.RED, null);
+		mc.setMessageLines(100);
 		
-		//Naive Bayes Analysis
-		NaiveBayes nb = new NaiveBayes(listDatum,NATRIBUT,listAttribute);
-		nb.process();
-		/*
-		kNN kn = new kNN(listDatum,3);
-		kn.nFold(10);
-		*/
+		buttonSelect.setBackground(Color.BLACK);
+		buttonSelect.setForeground(Color.WHITE);
+		buttonSelect.setFont(new Font("Arial", Font.PLAIN, 12));
 		
-		
-		/*
-		int success = 0;
-		int failed = 0;
-		for(int k=0;k<listDatum.size();k++){
-			Datum instance = listDatum.get(k);
-			//System.out.print("Instance : ");
-			//instance.printDatum();
-			//System.out.print("Naive Bayes Result : ");
-			String result = nb.getClassResult(instance);
-			//System.out.println(result);
-			//System.out.print("Status : ");
-			if (result.equals(instance.getKelas())){
-				success++;
-				//System.out.println("Success");
-			}
-			else{
-				failed++;
-				//System.out.println("failed");
-			}
-		}
-		
-		System.out.println("\n=============Summary==========");
-		double totalInstances = success + failed;
-		System.out.println("Success : " + success + "("+success /totalInstances * 100 +"%)");
-		System.out.println("Failed : " + failed + "("+failed / totalInstances * 100 +"%)");
-		
-	*/
+		frame.setResizable(false);
+	    frame.add(buttonSelect);
+	    frame.add(filePath);
+	    
+	    frame.add(buttonAnalyze);
+	    
+	    frame.add(scroll);
+	    frame.add(result);
+	    
+	    frame.add(nbButton);
+	    frame.add(knnButton);
+	    frame.add(typeGroupLabel);
+	    
+	    frame.add(ftButton);
+	    frame.add(tenFoldButton);
+	    frame.add(typeGroupLabel);
+	    
+	    buttonSelect.setBounds(30,30,100,30);
+	    filePath.setBounds(140,30,400,30);
+	    
+	    buttonAnalyze.setBounds(330,115,100,30);
+	    result.setBounds(30,170,300,50);
+	    
+	    nbButton.setBounds(30,100,100,30);
+	    knnButton.setBounds(30,130,100,30);
+	    
+	    ftButton.setBounds(170,100,100,30);
+	    tenFoldButton.setBounds(170,130,100,30);
+	    
+	    scroll.setBounds(30,250,430,200);
+	    frame.add(new JButton("Button 1"));
+	    frame.add(new JButton("Button 2"));
+	    frame.pack();
+	    frame.setSize(500,500);
+	    frame.setVisible(true);
 	}
-	
 }
